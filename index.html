@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoices to books · Toast Inventory concept · Vithyanela</title>
+<meta name="description" content="A concept case study: AI-assisted invoice capture, review, item mapping and accounting sync for Toast Inventory. Designed and prototyped by Vithyanela.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1A1A1A;--ink2:#444;--mute:#6B6B6B;--line:#E7E5E1;--bg:#FBFAF8;--card:#fff;--accent:#E0450B;--blue:#2C51A9;--ai:#5B45D6;--ai-t:#F4F1FF;--ok:#1E7B3C;--warn:#8A5A00;--err:#C62828}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+.w{max-width:1216px;margin:0 auto;padding:0 32px}
+header.top{position:sticky;top:0;z-index:20;background:rgba(251,250,248,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .w{display:flex;align-items:center;gap:24px;height:60px}
+.who{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#555;white-space:nowrap}
+.who a{color:inherit;text-decoration:none}
+nav.sec{display:flex;gap:4px;margin:0 auto;overflow:auto;scrollbar-width:none}
+nav.sec a{font-size:13.5px;color:#444;text-decoration:none;padding:6px 10px;border-radius:999px;white-space:nowrap}
+nav.sec a:hover,nav.sec a.on{background:#1A1A1A;color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border-radius:999px;font-weight:600;font-size:14.5px;text-decoration:none;border:1px solid transparent;white-space:nowrap}
+.btn.dark{background:#1A1A1A;color:#fff}.btn.dark:hover{background:#000}
+.btn.line{border-color:#CFCBC4;color:var(--ink);background:#fff}.btn.line:hover{border-color:#999}
+.btn.sm{height:36px;padding:0 14px;font-size:13.5px}
+.mono{font:500 12px/1.4 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#666}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.02em;margin:0}
+h1{font-size:clamp(44px,6.4vw,84px);line-height:1}
+h1 em{font-style:normal;color:var(--accent)}
+h2{font-size:clamp(30px,3.6vw,46px);line-height:1.08}
+h2 span{color:#8C8780}
+h3{font-size:22px;line-height:1.25}
+.lead{font-size:19px;line-height:1.65;color:var(--ink2);max-width:680px}
+p{max-width:720px}
+/* hero */
+.hero{padding:88px 0 40px}
+.hero .lead{margin:28px 0 32px}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1.5px solid var(--ink);border-bottom:1px solid var(--line);margin-top:48px}
+.facts div{padding:18px 18px 18px 0}.facts b{display:block;font-weight:500;font-size:15px;margin-top:6px;line-height:1.45}
+.pib{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:14px;background:#fff;margin-top:36px;overflow:hidden}
+.pib div{padding:22px;border-right:1px solid var(--line)}.pib div:last-child{border-right:0}
+.pib .mono{color:#B23A0A;display:block;margin-bottom:10px}.pib p{margin:0;font-size:15px;line-height:1.55}
+/* sections */
+section.s{display:grid;grid-template-columns:200px 1fr;gap:48px;padding:96px 0;border-top:1px solid var(--line)}
+.sl .n{font:600 44px/1 Fraunces,serif;color:var(--accent)}
+.sl .mono{display:block;margin-top:10px;max-width:150px}
+.sc>p.lead{margin:20px 0 0}
+.sub{margin-top:48px}
+.sub>h3{margin-bottom:14px}
+.note{border-left:3px solid var(--accent);background:#FFF6F1;padding:16px 20px;border-radius:0 10px 10px 0;margin-top:28px;max-width:760px;font-size:15.5px}
+.note b{font-weight:600}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+.card .mono{display:block;margin-bottom:8px}.card h4{margin:0 0 6px;font-size:17px;font-weight:600}.card p{margin:0;font-size:14.5px;color:var(--ink2);line-height:1.55}
+.card ul{margin:10px 0 0;padding-left:18px;font-size:14.5px;color:var(--ink2)}.card li{margin-bottom:4px}
+.big{font:600 52px/1 Fraunces,serif;letter-spacing:-.02em}.big small{font:500 18px Inter;color:#666;margin-left:4px}
+.stat p{margin-top:12px}
+.persona{display:flex;flex-direction:column;gap:12px}
+.av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff}
+.tag{display:inline-block;font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;background:#F1EFEB;color:#555;margin-right:4px}
+.q{font-family:Fraunces,serif;font-size:17px;line-height:1.45;color:#333;font-style:italic}
+table{width:100%;border-collapse:collapse;font-size:14.5px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#F6F4F0;font-weight:600;font-size:13px;color:#444}
+tr:last-child td{border-bottom:0}
+td b{font-weight:600}
+.flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-top:8px}
+.st{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;position:relative;margin-right:22px}
+.st:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:50%;transform:translateY(-50%);color:#999}
+.st b{display:block;font-size:14.5px}.st span{font-size:13px;color:var(--mute)}
+.st.dark{background:#1A1A1A;color:#fff;border-color:#1A1A1A}.st.dark span{color:#BBB}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;border-radius:999px;padding:3px 10px}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.p-w{background:#FDF3D8;color:var(--warn)}.p-b{background:#EEF2FB;color:var(--blue)}.p-g{background:#E7F5EC;color:var(--ok)}.p-r{background:#FDECEC;color:var(--err)}
+/* screens */
+.scr{margin-top:56px}
+.scr .hd{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:18px}
+.scr .hd p{margin:6px 0 0;color:var(--ink2)}
+.frame{border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(40,30,20,.35);background:#fff}
+.frame img{display:block;width:100%;height:auto}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;counter-reset:w}
+.why div{font-size:14.5px;color:var(--ink2);padding-left:34px;position:relative;line-height:1.55}
+.why div::before{counter-increment:w;content:counter(w);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:#1A1A1A;color:#fff;font:600 12px/22px Inter;text-align:center}
+.why b{color:var(--ink);font-weight:600}
+.phones{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:20px}
+.phones img{width:100%;border-radius:22px;display:block;box-shadow:0 20px 40px -24px rgba(0,0,0,.4)}
+.phones small{display:block;text-align:center;font-size:12.5px;color:var(--mute);margin-top:8px}
+/* ai */
+.ai{background:linear-gradient(135deg,#F2F4FF,#F7F2FF 55%,#FDF2F8);border:1px solid #E4DCFA}
+.ai .mono{color:var(--ai)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.vs .card h4{display:flex;gap:8px;align-items:center}
+.conf{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.bars{display:inline-flex;gap:2px;align-items:flex-end;height:14px;margin-right:6px;vertical-align:-1px}.bars i{width:4px;background:#DDD;border-radius:1px}.bars i:nth-child(1){height:6px}.bars i:nth-child(2){height:10px}.bars i:nth-child(3){height:14px}
+.cf{display:inline-flex;align-items:center;font-size:14px;font-weight:600;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+/* iterations */
+.it{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;margin-bottom:12px}
+.it div{padding:18px 20px;font-size:14.5px;line-height:1.55}.it div:first-child{background:#FAF8F5;border-right:1px solid var(--line);color:#666}
+.it .mono{display:block;margin-bottom:6px;font-size:11px}
+.it div:last-child .mono{color:#1A6B34}
+/* end */
+.end{padding:120px 0;text-align:left;border-top:1px solid var(--line)}
+.end h2{font-size:clamp(40px,5vw,64px)}
+footer{border-top:1px solid var(--line);padding:28px 0;font-size:13px;color:var(--mute)}
+footer .w{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:980px){section.s{grid-template-columns:1fr;gap:20px;padding:64px 0}.g3,.g4,.pib,.facts,.why{grid-template-columns:1fr 1fr}.phones{grid-template-columns:repeat(3,1fr)}nav.sec{display:none}.it,.vs{grid-template-columns:1fr}.it div:first-child{border-right:0;border-bottom:1px solid var(--line)}}
+@media(max-width:600px){.w{padding:0 20px}.g2,.g3,.g4,.pib,.facts,.why{grid-template-columns:1fr}.pib div{border-right:0;border-bottom:1px solid var(--line)}.phones{grid-template-columns:1fr 1fr}.who{display:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="w">
+ <div class="who"><a href="https://www.linkedin.com/in/vithyanela" target="_blank" rel="noopener">Vithyanela</a> · Toast Inventory concept</div>
+ <nav class="sec" aria-label="Sections">
+  <a href="#problem">Problem</a><a href="#users">Users</a><a href="#journey">Journey</a><a href="#principles">Principles</a><a href="#ai">Toast IQ</a><a href="#screens">Screens</a><a href="#decisions">Decisions</a><a href="#next">Next</a>
+ </nav>
+ <a class="btn dark sm" href="prototype.html">Open prototype ↗</a>
+</div></header>
+
+<main>
+<div class="w hero">
+ <div class="mono">Concept case study · Product design · Inventory · November 2026</div>
+ <h1 style="margin-top:22px">Invoices in.<br>Costs right. <em>Books clean.</em></h1>
+ <p class="lead">An AI-assisted flow for Toast Inventory that takes a supplier invoice from a crumpled paper at the back door to a correct bill in QuickBooks, and only asks a person about the lines that genuinely need one. This page is the trail behind the screens: the problem, the people, the journey, the decisions, and a working prototype with realistic data you can click through.</p>
+ <div class="acts"><a class="btn dark" href="prototype.html">Open the prototype ↗</a><a class="btn line" href="#screens">Jump to the screens</a></div>
+ <div class="facts">
+  <div><span class="mono">My role</span><b>Research, product strategy, UX, UI and a working prototype built with Claude</b></div>
+  <div><span class="mono">Scope</span><b>Invoice capture → review → item mapping → accounting sync. Desktop + iOS</b></div>
+  <div><span class="mono">Timeline</span><b>One weekend, alongside a full-time role</b></div>
+  <div><span class="mono">Best viewed</span><b>Desktop. Mobile screens are in the Figma file</b></div>
+ </div>
+ <div class="pib">
+  <div><span class="mono">The problem</span><p>Invoices are still keyed in or re-checked by hand, so stock, costs and the books drift apart and margin losses show up weeks late.</p></div>
+  <div><span class="mono">The insight</span><p>Operators don’t need AI that’s “accurate”. They need to know <b>which</b> lines to trust, so they stop re-checking all of them.</p></div>
+  <div><span class="mono">The bet</span><p>Let Toast IQ read everything, show its confidence in plain words, and ask a person only about exceptions. People always approve.</p></div>
+  <div><span class="mono">How we’d know</span><p>Time from invoice received to bill in the books, and the share of lines that needed no human touch.</p></div>
+ </div>
+</div>
+
+<div class="w">
+
+<section class="s" id="brief"><div class="sl"><div class="n">01</div><span class="mono">Reading the brief</span></div><div class="sc">
+ <h2>One problem, one journey, <span>done properly.</span></h2>
+ <p class="lead">Toast is building a unified inventory platform for restaurants and retail. Inventory is where a store’s money sits, and the invoice is where most of that money enters the system. I chose to go deep on that single journey instead of shallow across the whole platform.</p>
+ <div class="note"><b>A note on scope.</b> I took one problem and one user journey to show how I think as a product designer. There are many more flows to explore in depth, like item creation, how the catalog is built and managed, EDI setup and migration. I did this over a weekend alongside my full-time job; given more time, I’d go deep on each of them, and I’m confident doing that work. What I’d explore next is listed at the end.</div>
+</div></section>
+
+<section class="s" id="problem"><div class="sl"><div class="n">02</div><span class="mono">The problem</span></div><div class="sc">
+ <h2>The money moves on paper, <span>and nobody checks it until month-end.</span></h2>
+ <p class="lead">Every other part of a POS is real-time. Cost data still arrives as paper, PDFs and email, gets typed in late at night, and reaches the accounting system with errors nobody sees until the P&amp;L.</p>
+ <div class="grid g3 sub">
+  <div class="card stat"><div class="big">~49<small>/ week</small></div><p>Invoices a two-location GM handles in my scenario, from Sysco, US Foods, produce, beer and wine suppliers.</p></div>
+  <div class="card stat"><div class="big">3+<small>hrs</small></div><p>Weekly keying and re-checking at ~4 minutes an invoice, usually after close, when mistakes are most likely.</p></div>
+  <div class="card stat"><div class="big">3<small>wks</small></div><p>How long a quiet supplier price rise can go unnoticed before it shows up as a margin drop.</p></div>
+ </div>
+ <p style="font-size:13px;color:var(--mute);margin-top:12px">Scenario figures used to frame the design, not measured data. Validating them with operators is the first thing I’d do.</p>
+ <div class="grid g2 sub">
+  <div class="card"><span class="mono">Why it’s hard</span><h4>Every supplier names the same thing differently</h4><p>“CHKN BRST BNLS 4/10#”, “Chicken Breast Boneless 40 lb” and a handwritten “chix brst” are the same item. Pack sizes change, brands get substituted, and each number has to land in three places: stock, recipe costs and the books.</p></div>
+  <div class="card"><span class="mono">Why AI alone doesn’t fix it</span><h4>If it looks equally sure about everything, people re-check everything</h4><p>One misread “10#” or a $38.50 case read as $385.0 quietly inflates food cost. Without visible confidence and a fast way to correct, AI capture saves nobody any time.</p></div>
+ </div>
+</div></section>
+
+<section class="s" id="users"><div class="sl"><div class="n">03</div><span class="mono">Who I designed for</span></div><div class="sc">
+ <h2>Three people touch every invoice. <span>They want different things from it.</span></h2>
+ <div class="grid g3 sub">
+  <div class="card persona"><div class="av" style="background:#2C51A9">M</div><div><h4 style="margin:0">Maya · General Manager</h4><span class="tag">Approves</span><span class="tag">Owns food cost</span></div><p class="q">“I just need to know the numbers are right without reading every line at 11 PM.”</p><p>Reviews and approves invoices after close. Cares about cost changes and margin.</p></div>
+  <div class="card persona"><div class="av" style="background:#B8400F">J</div><div><h4 style="margin:0">Jordan · Receiver</h4><span class="tag">Phone</span><span class="tag">7 AM, driver waiting</span></div><p class="q">“Is it all here? He’s in a hurry.”</p><p>Checks deliveries at the back door, flags shorts, scans the invoice. Can’t approve bills.</p></div>
+  <div class="card persona"><div class="av" style="background:#1E7B3C">P</div><div><h4 style="margin:0">Priya · Bookkeeper</h4><span class="tag">QuickBooks</span><span class="tag">Month-end</span></div><p class="q">“Why is this bill posted twice, and where did the paper goods go?”</p><p>Needs Toast and QuickBooks to agree. Fixes sync and account issues, not invoice lines.</p></div>
+ </div>
+ <p style="margin-top:20px;color:var(--ink2)">The same engine serves restaurants, retail and hybrid stores (a café that also sells packaged goods). The location switcher shows the type, because it changes which items and invoices you see.</p>
+</div></section>
+
+<section class="s" id="journey"><div class="sl"><div class="n">04</div><span class="mono">Journey</span></div><div class="sc">
+ <h2>A week of invoices, <span>from the back door to the books.</span></h2>
+ <table class="sub" style="margin-top:32px">
+  <thead><tr><th style="width:16%">Stage</th><th>Today</th><th>Pain</th><th>With this design</th></tr></thead>
+  <tbody>
+   <tr><td><b>Delivery</b><br><span style="color:var(--mute);font-size:13px">Jordan · 7 AM</span></td><td>Counts cases, signs paper</td><td>Shorts get signed for</td><td>Scan on iPhone, tick lines, flag a short with a photo</td></tr>
+   <tr><td><b>Capture</b></td><td>Paper, email PDFs, EDI in three places</td><td>Lost or entered twice</td><td>One inbox, duplicate detection, “Toast IQ is reading”</td></tr>
+   <tr><td><b>Review</b><br><span style="color:var(--mute);font-size:13px">Maya · after close</span></td><td>Keys or re-checks every line</td><td>~3 hrs a week</td><td>Only flagged lines need her; the rest show their evidence</td></tr>
+   <tr><td><b>Fix exceptions</b></td><td>Matches names, converts packs by hand</td><td>Same fix every week</td><td>Map once, reused forever; pack size → $/lb for her</td></tr>
+   <tr><td><b>Approve</b></td><td>Approves, glances at food cost</td><td>Price rises seen weeks late</td><td>Price changes with their margin impact, before approval</td></tr>
+   <tr><td><b>Sync</b><br><span style="color:var(--mute);font-size:13px">Priya</span></td><td>Exports, fixes mismatches</td><td>Silent failures</td><td>Held bills with a plain reason and a suggested fix</td></tr>
+  </tbody></table>
+</div></section>
+
+<section class="s" id="principles"><div class="sl"><div class="n">05</div><span class="mono">Principles</span></div><div class="sc">
+ <h2>Five rules that settled <span>most arguments.</span></h2>
+ <div class="grid g2 sub" style="margin-top:32px">
+  <div class="card"><span class="mono">01</span><h4>Ask only what needs a human</h4><p>The screen leads with the question (“How many avocado cases came in?”), not the invoice code. Everything else is confirmed and one click away.</p></div>
+  <div class="card"><span class="mono">02</span><h4>AI suggests, people approve</h4><p>Toast IQ never approves, pays or posts. It explains why, shows what it checked, and says when it isn’t sure.</p></div>
+  <div class="card"><span class="mono">03</span><h4>Confidence in words, not decimals</h4><p>“Exact match · UPC matches” beats “98%”. Nobody can act on the difference between 97 and 99.</p></div>
+  <div class="card"><span class="mono">04</span><h4>Every number traces back to the paper</h4><p>Flagged lines highlight on the invoice image; the total check and line count sit next to the approve button.</p></div>
+  <div class="card" style="grid-column:span 2"><span class="mono">05</span><h4>One colour, one job</h4><p>Orange is Toast and where you are. Blue is actions. A soft violet-to-pink gradient is only Toast IQ. Green, amber and red are only status. Tabs stay neutral. When a colour means one thing, people stop reading and start recognising.</p></div>
+ </div>
+</div></section>
+
+<section class="s" id="ia"><div class="sl"><div class="n">06</div><span class="mono">Information architecture</span></div><div class="sc">
+ <h2>Built around the invoice’s life, <span>not around menus.</span></h2>
+ <p class="lead">Every invoice is in exactly one state, and every screen answers “what needs me next?”. The list sorts by urgency; the tabs are the jobs people actually do.</p>
+ <div class="sub"><h3>Invoice lifecycle</h3>
+  <div class="flow" style="margin-top:16px">
+   <div class="st dark"><b>Captured</b><span>Email · EDI · scan · upload</span></div>
+   <div class="st"><b><span class="pill p-w">Needs you</span></b><span>Only the exceptions</span></div>
+   <div class="st"><b><span class="pill p-b">Ready to approve</span></b><span>Checked by Toast IQ</span></div>
+   <div class="st"><b><span class="pill p-g">Approved</span></b><span>Undo until 2 AM sync</span></div>
+   <div class="st"><b><span class="pill p-g">In QuickBooks</span></b><span>Finished</span></div>
+  </div>
+  <p style="font-size:14.5px;color:var(--ink2);margin-top:14px"><span class="pill p-r">Sync failed</span> is the exception path: approved, but rejected by the accounting system. It surfaces second in the list and on Accounting sync, because it’s the bookkeeper’s to fix, not the GM’s.</p>
+ </div>
+ <div class="grid g3 sub">
+  <div class="card"><span class="mono">Inventory</span><h4>Invoices · Item mappings</h4><p>Plus Suppliers, Counts and Purchase orders (outside this prototype).</p></div>
+  <div class="card"><span class="mono">Accounting</span><h4>Accounting sync · GL mappings</h4><p>Where costs post in QuickBooks, and what’s blocking tonight’s sync.</p></div>
+  <div class="card"><span class="mono">Everywhere</span><h4>Ask Toast IQ</h4><p>A docked panel that knows the location and week you’re looking at.</p></div>
+ </div>
+</div></section>
+
+<section class="s" id="ai"><div class="sl"><div class="n">07</div><span class="mono">Toast IQ</span></div><div class="sc">
+ <h2>AI where it removes work. <span>Honest where it’s unsure.</span></h2>
+ <p class="lead">The JD asks to tell valuable AI from hype. My test: does it remove a step a person does today, and can they see why it’s right?</p>
+ <div class="vs sub">
+  <div class="card ai"><span class="mono">Earns its place</span><h4>Reads, matches, suggests</h4><ul><li>Reads invoice headers and line items, including handwriting</li><li>Matches supplier codes to your items and converts pack sizes</li><li>Suggests GL accounts from how your bookkeeper actually posts</li><li>Answers “what’s left before tonight’s sync?” as a live checklist</li></ul></div>
+  <div class="card"><span class="mono">Deliberately not</span><h4>Decides, pays, guesses silently</h4><ul><li>Never approves, pays or posts a bill</li><li>Never hides a low-confidence match behind a green tick</li><li>Declines off-topic questions and points back to what it can do</li><li>Asks a follow-up when a question is vague</li></ul></div>
+ </div>
+ <div class="sub"><h3>Designing for when it’s unsure</h3>
+  <div class="conf" style="margin-top:14px">
+   <span class="cf"><span class="bars"><i style="background:#1E7B3C"></i><i style="background:#1E7B3C"></i><i style="background:#1E7B3C"></i></span><span style="color:#1E7B3C">Exact match</span>&nbsp;<span style="font-weight:400;color:#666">· UPC matches</span></span>
+   <span class="cf"><span class="bars"><i style="background:#D08700"></i><i style="background:#D08700"></i><i></i></span><span style="color:#A86400">Likely</span>&nbsp;<span style="font-weight:400;color:#666">· name + pack size</span></span>
+   <span class="cf"><span class="bars"><i style="background:#C62828"></i><i></i><i></i></span><span style="color:#C62828">Unsure</span>&nbsp;<span style="font-weight:400;color:#666">· no clear match</span></span>
+  </div>
+  <p style="color:var(--ink2);margin-top:16px">Every suggestion opens an evidence card (“3 of 4 checks pass”, with the failing check called out as “worth a look”), alternatives, “Search items” and “Create new item”. 31 exact matches can be accepted in one click; the rest get a quick look.</p>
+ </div>
+</div></section>
+
+<section class="s" id="screens"><div class="sl"><div class="n">08</div><span class="mono">The screens</span></div><div class="sc">
+ <h2>Here’s the part <span>you can click through.</span></h2>
+ <p class="lead">Every screen below is live in the prototype with realistic suppliers, prices and pack sizes. Try it as the GM, the receiver or the bookkeeper from the ⓘ note in the menu.</p>
+
+ <div class="scr"><div class="hd"><div><h3>Invoices inbox</h3><p>Monday after close: what needs Maya, and nothing else first.</p></div><a class="btn line sm" href="prototype.html#invoices">Open ↗</a></div>
+  <div class="frame"><img src="img/inbox.jpg" alt="Invoices inbox with a Toast IQ summary, filters and a list sorted by urgency" loading="lazy"></div>
+  <div class="why"><div><b>Toast IQ summary</b> names the 3 invoices that need her and roughly how long, with one Start review button.</div><div><b>Sorted by urgency</b>: needs you, sync failed, ready, approved, in QuickBooks. Status lives on the row, so tabs stay neutral.</div><div><b>Approve 8 ready · $10,524</b> shows the money before the click, then confirms with a list and a 7-second undo.</div></div></div>
+
+ <div class="scr"><div class="hd"><div><h3>Review an invoice</h3><p>Question first, evidence second, answer on the right.</p></div><a class="btn line sm" href="prototype.html#review-sysco">Open ↗</a></div>
+  <div class="frame"><img src="img/review.jpg" alt="Invoice review with the paper invoice on the left and three questions on the right" loading="lazy"></div>
+  <div class="why"><div><b>Two-line cards</b>: what kind of decision (icon), the question, one sparkle-marked reason. Answers show their money impact.</div><div><b>Locked approve explains itself</b>: “Approve · 3 left”, and clicking jumps to the next open item.</div><div><b>Highlights on the paper</b> tie each question to its line; clean invoices show “Nothing flagged” and their matched lines.</div></div></div>
+
+ <div class="scr"><div class="hd"><div><h3>Item mappings</h3><p>Teach Toast once; every future invoice reuses it.</p></div><a class="btn line sm" href="prototype.html#mappings">Open ↗</a></div>
+  <div class="frame"><img src="img/mappings.jpg" alt="Item mappings with confidence signals and a Toast IQ evidence panel" loading="lazy"></div>
+  <div class="why"><div><b>Confidence as a signal</b>: bars, a word and a reason. The % is on hover for those who want it.</div><div><b>Evidence card</b> separates “why it fits” from “worth a look”, so risk isn’t buried.</div><div><b>Accept all 31 exact matches</b> clears the bulk; Accept / Change stay labelled on every row.</div></div></div>
+
+ <div class="scr"><div class="hd"><div><h3>Accounting sync</h3><p>Priya’s month-end, without the phone calls.</p></div><a class="btn line sm" href="prototype.html#accounting">Open ↗</a></div>
+  <div class="frame"><img src="img/accounting.jpg" alt="Accounting sync with status figures, issues needing attention and GL account mapping" loading="lazy"></div>
+  <div class="why"><div><b>Calm dashboard</b>: neutral tiles; only “kept out of your books” is red. Time saved is shown every visit.</div><div><b>Each failure says why and what to do</b>, with a Toast IQ suggestion based on how the books are actually kept.</div><div><b>Remap & retry</b> shows exactly what changes and what doesn’t before saving.</div></div></div>
+
+ <div class="scr"><div class="hd"><div><h3>Ask Toast IQ</h3><p>A finish-line checklist, not a chatbot.</p></div><a class="btn line sm" href="prototype.html#invoices">Open ↗</a></div>
+  <div class="frame"><img src="img/iq.jpg" alt="Toast IQ panel answering what is left before tonight's sync with a to-do checklist" loading="lazy"></div>
+  <div class="why"><div><b>Shows its work</b>: “Checked 14 invoices · checked accounting sync”, then a live to-do list that ticks itself off.</div><div><b>Handles real chat</b>: greetings, vague asks get a follow-up, off-topic gets redirected, “approve everything” is declined.</div><div><b>Context and honesty</b>: “Answering for South End · week of Nov 10” and “Toast IQ can make mistakes. It suggests; you approve.”</div></div></div>
+
+ <div class="scr"><div class="hd"><div><h3>Upload</h3><p>Upload is a commodity. Reading is the moment that matters.</p></div><a class="btn line sm" href="prototype.html#invoices">Open ↗</a></div>
+  <div class="frame"><img src="img/upload-done.jpg" alt="Upload window with files that need attention, files read, and a drop zone" loading="lazy"></div>
+  <div class="why"><div><b>Problems first</b>: too blurry → retake on phone; duplicate → compare side by side, paused so it isn’t paid twice.</div><div><b>Each file says what it became</b>: “Sysco Boston · 34 lines · 3 things to check”; a two-invoice scan is split automatically.</div><div><b>Toast IQ is reading</b>: a scan sweep and a live line count, distinct from the quiet upload bar.</div></div></div>
+
+ <div class="scr"><div class="hd"><div><h3>Receiving on iPhone</h3><p>At the back door, with the driver waiting. Designed in Figma.</p></div></div>
+  <div class="phones">
+   <div><img src="img/m1.jpg" alt="Today’s deliveries" loading="lazy"><small>Today’s deliveries</small></div>
+   <div><img src="img/m2.jpg" alt="Scan invoice with auto capture" loading="lazy"><small>Scan · auto capture</small></div>
+   <div><img src="img/m3.jpg" alt="Blurry capture recovery" loading="lazy"><small>Blurry → retake</small></div>
+   <div><img src="img/m4.jpg" alt="Check exceptions" loading="lazy"><small>Check exceptions</small></div>
+   <div><img src="img/m5.jpg" alt="Received confirmation" loading="lazy"><small>Received</small></div>
+  </div>
+  <p style="font-size:14px;color:var(--mute);margin-top:12px">Plus offline, camera access off, short delivery with credit request, and receiver-can’t-approve states in the Figma file.</p></div>
+</div></section>
+
+<section class="s" id="decisions"><div class="sl"><div class="n">09</div><span class="mono">Decisions I changed</span></div><div class="sc">
+ <h2>The first answer <span>was rarely the right one.</span></h2>
+ <p class="lead">I critiqued every screen as the GM at 11 PM. A few of the calls that changed:</p>
+ <div class="sub">
+  <div class="it"><div><span class="mono">Before</span>Confidence shown as “High · 98%” with a bar and two icon-only buttons.</div><div><span class="mono">After</span>Signal bars + “Exact match / Likely / Unsure” + one reason, and labelled Accept / Change. People missed the icons and couldn’t act on the %.</div></div>
+  <div class="it"><div><span class="mono">Before</span>Toast IQ in Toast orange.</div><div><span class="mono">After</span>Its own orb gradient. Orange already meant brand, location and warnings, so AI suggestions looked like alerts.</div></div>
+  <div class="it"><div><span class="mono">Before</span>Review cards led with the invoice code and line maths.</div><div><span class="mono">After</span>Question first, one-line reason, money on the answer buttons. Half the height; decisions readable at a glance.</div></div>
+  <div class="it"><div><span class="mono">Before</span>Status-coloured tabs, then blue tabs against an orange menu.</div><div><span class="mono">After</span>Neutral tabs with one dark active chip. Colour is reserved for status on the rows.</div></div>
+  <div class="it"><div><span class="mono">Before</span>“Show” on confirmed lines raised a toast and changed nothing.</div><div><span class="mono">After</span>It expands the matched lines in place and tints them on the paper. When the screen changes, the change is the feedback.</div></div>
+  <div class="it"><div><span class="mono">Before</span>A “Show 6 more” list, then grouped sections inside “All”.</div><div><span class="mono">After</span>One urgency-sorted list; tabs for the jobs; older invoices behind “View history”. No section duplicates a tab.</div></div>
+ </div>
+</div></section>
+
+<section class="s" id="system"><div class="sl"><div class="n">10</div><span class="mono">Craft &amp; access</span></div><div class="sc">
+ <h2>Accessible by default, <span>consistent by rule.</span></h2>
+ <div class="grid g3 sub" style="margin-top:32px">
+  <div class="card"><span class="mono">WCAG 2.2 AA</span><h4>0 automated issues</h4><p>Audited with axe-core: contrast, names, keyboard access, focus, 24px targets, dialogs, live regions and reduced motion.</p></div>
+  <div class="card"><span class="mono">Design system</span><h4>Components in Figma</h4><p>Buttons, pills, nav, cards and the Toast IQ orb as variants, applied across desktop and iOS. In production I’d build on Toast’s own system.</p></div>
+  <div class="card"><span class="mono">Responsive</span><h4>Laptop first</h4><p>Review cards restack at 1280px; below 1100px the decisions move above the invoice paper.</p></div>
+ </div>
+</div></section>
+
+<section class="s" id="measure"><div class="sl"><div class="n">11</div><span class="mono">Measuring it</span></div><div class="sc">
+ <h2>One number <span>both the operator and Toast care about.</span></h2>
+ <div class="grid g2 sub" style="margin-top:32px">
+  <div class="card" style="background:#1A1A1A;color:#fff;border-color:#1A1A1A"><span class="mono" style="color:#FF9E78">North star</span><h4 style="font-size:22px;font-family:Fraunces,serif">Time from invoice received to bill in the books</h4><p style="color:#CCC">Captures capture speed, review effort and sync health in one measure the GM can feel.</p></div>
+  <div class="card"><span class="mono">Signals &amp; guardrails</span><ul><li>% of lines matched with no human touch</li><li>Edits per invoice, and re-check rate of “exact” matches</li><li>Undo rate after approval (trust guardrail)</li><li>Sync failures per week and time to fix</li><li>Business: add-on attach and retention for inventory users</li></ul></div>
+ </div>
+</div></section>
+
+<section class="s" id="next"><div class="sl"><div class="n">12</div><span class="mono">What I’d do next</span></div><div class="sc">
+ <h2>Thought through, <span>not yet built.</span></h2>
+ <p class="lead">I love going deep on flows like these. Within the weekend I prioritised one journey end to end; these are the next ones I’d take on.</p>
+ <div class="grid g2 sub">
+  <div class="card"><span class="mono">Validate</span><h4>Test with operators</h4><p>Five sessions with restaurant and retail managers and Toast support, using this prototype with their own invoice types.</p></div>
+  <div class="card"><span class="mono">EDI</span><h4>Supplier setup &amp; field mapping</h4><p>Connect a distributor, preview incoming fields, match unknown codes with the same evidence panel.</p></div>
+  <div class="card"><span class="mono">Data model</span><h4>Supplier record</h4><p>Contacts, terms, delivery days, channel and price history, so price changes have context.</p></div>
+  <div class="card"><span class="mono">Migration</span><h4>Moving customers to the new platform</h4><p>What moves, what matched automatically, and a review queue using the same needs-you / ready pattern.</p></div>
+  <div class="card"><span class="mono">Retail</span><h4>Bottle shops, grocery, convenience</h4><p>UPC-first matching, case-to-each conversion, and high-SKU catalogs.</p></div>
+  <div class="card"><span class="mono">Catalog</span><h4>Item creation &amp; catalog management</h4><p>How the catalog is built in the first place, and kept clean across locations.</p></div>
+ </div>
+</div></section>
+</div>
+
+<div class="w end">
+ <div class="mono">Thanks for reading</div>
+ <h2 style="margin:18px 0 14px">See it working.</h2>
+ <p class="lead" style="margin-bottom:28px">Start with the inbox, review Sysco, map the chicken, fix the sync, and ask Toast IQ what’s left before tonight.</p>
+ <div class="acts"><a class="btn dark" href="prototype.html">Open the prototype ↗</a><a class="btn line" href="https://www.linkedin.com/in/vithyanela" target="_blank" rel="noopener">Connect on LinkedIn ↗</a></div>
+</div>
+</main>
+<footer><div class="w"><span>Concept by Vithyanela · Not affiliated with Toast · All data is fictional</span><a href="#top" onclick="scrollTo(0,0);return false">Back to top ↑</a></div></footer>
+<script>
+const links=[...document.querySelectorAll('nav.sec a')];const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id))}})},{rootMargin:'-40% 0px -55% 0px'});secs.forEach(s=>s&&io.observe(s));
+</script>
+</body>
+</html>
