@@ -180,16 +180,53 @@ header.top .btn{margin-left:auto}
 .pr.on{border-color:var(--accent);background:#FFF8F4}
 .back{position:absolute;left:14px;bottom:-15px;font-size:12px;font-weight:600;color:#fff;background:var(--accent);border-radius:999px;padding:4px 11px;white-space:nowrap}
 
-/* journey */
-.jt{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
-.jr{display:grid;grid-template-columns:170px 1fr 1fr 1.25fr;border-top:1px solid var(--line)}
-.jr:first-child{border-top:0}
-.jr>div{padding:16px 20px;font-size:14.5px;line-height:1.5}
-.jr.h>div{font:500 11px/1.4 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);background:#FAF8F5;padding:13px 20px}
-.jr.h .p{color:var(--err)}.jr.h .d{color:var(--ok)}
-.jr .st b{display:block;font-size:15px}.jr .st span{font-size:12.5px;color:var(--mute)}
-.jr .p{color:#9A3A2E}
-.jr .d{border-left:2px solid #B6DFC4;color:var(--ink)}
+/* users */
+.ppl .card{display:flex;flex-direction:column}
+.ph-top{display:flex;gap:14px;align-items:center}
+.ph-top .av{width:56px;height:56px;border-radius:50%;color:#fff;font:600 19px/56px Inter;text-align:center;flex:none}
+.ph-top h3{font:600 20px/1.2 Inter;letter-spacing:-.01em}
+.ph-top span{font-size:13.5px;color:var(--mute)}
+.ppl .tags{margin-top:14px}
+.ppl .tg{color:#555;background:#F3F1EE;border-color:#E6E1DB}
+.ppl .q{font:italic 500 18px/1.45 Fraunces,serif;margin:16px 0 0;color:var(--ink)}
+.ppl .need{margin-top:14px;font-size:14px;line-height:1.5;color:var(--ink2)}
+.ppl .need b{color:var(--ink)}
+.cando{margin-top:auto;padding-top:16px;display:grid;gap:6px;font-size:13.5px;color:var(--ink2)}
+.cando div{display:flex;gap:8px}
+.cando .y::before{content:"✓";color:var(--ok);font-weight:700}
+.cando .n::before{content:"✕";color:var(--err);font-weight:700}
+
+/* journey map */
+.jm-wrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.jm{min-width:1000px}
+.jm-row{display:grid;grid-template-columns:150px repeat(6,1fr);border-top:1px solid var(--line)}
+.jm-row:first-child{border-top:0}
+.jm-row>div{padding:14px;font-size:13.5px;line-height:1.45;border-left:1px solid #F3EFEA}
+.jm-row>div:first-child{border-left:0;font:500 11px/1.4 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);background:#FAF8F5}
+.jm-head>div{background:#FAF8F5}
+.jm-head b{display:block;font-size:15px}
+.jm-head span{display:inline-block;font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;margin-top:6px}
+.who-j{background:var(--warn-t);color:var(--warn)}.who-m{background:var(--blue-t);color:var(--blue)}.who-p{background:var(--ok-t);color:var(--ok)}.who-a{background:#F1EEEA;color:#555}
+.jm .think>div:not(:first-child){font:italic 500 14.5px/1.4 Fraunces,serif;color:var(--ink)}
+.jm .pain>div:first-child{color:var(--err)}
+.jm .pain>div:not(:first-child){color:#9A3A2E}
+.jm .with>div:first-child{color:var(--ok)}
+.jm .with>div:not(:first-child){color:#1F5E33;background:#F5FBF7}
+.jm-emo>div:first-child{display:flex;flex-direction:column;justify-content:space-between}
+.jm-emo .key{display:grid;gap:6px;font:500 12px Inter;letter-spacing:0;text-transform:none;color:var(--ink2)}
+.jm-emo .key i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.jm-emo .ax{font:500 11px Inter;letter-spacing:0;text-transform:none;color:var(--mute)}
+.plotcell{grid-column:2/-1;position:relative;height:240px;padding:0!important;background:linear-gradient(#F7FBF8,#fff 50%,#FDF6F5)}
+.plot{position:absolute;left:0;right:0;top:34px;bottom:34px}
+.plot .mid{position:absolute;left:0;right:0;top:50%;border-top:1px dashed #E3DDD6}
+.plot svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.plot .dot{position:absolute;left:var(--x);top:var(--y);width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.plot .em{position:absolute;left:var(--x);transform:translateX(-50%);font-size:12px;font-weight:600;white-space:nowrap;padding:2px 9px;border-radius:999px}
+.plot .jwo.dot{background:var(--err)}.plot .jwi.dot{background:var(--ok)}
+.plot .em.jwo{top:calc(var(--y) + 12px);color:var(--err);background:var(--err-t)}
+.plot .em.jwi{top:calc(var(--y) - 34px);color:var(--ok);background:var(--ok-t)}
+.k-wo{background:var(--err)}.k-wi{background:var(--ok)}
+.jm-hint{display:none}
 
 /* IA */
 .ia3{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:18px;align-items:start}
@@ -236,14 +273,6 @@ header.top .btn{margin-left:auto}
 .pr5 h4{margin-top:12px}
 
 /* AI */
-.aig{display:grid;grid-template-columns:.8fr 1.6fr;gap:28px;align-items:start}
-.rejc{background:#FAF8F5;border:1.5px dashed #DDD5CC;border-radius:16px;padding:18px;position:relative;margin-top:12px}
-.rejc .x{position:absolute;right:-10px;top:-10px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center}
-.rejc .demo{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px}
-.rejc p{font-size:13.5px;color:var(--ink2);margin:12px 0 0;line-height:1.5}
-.og{background:#FFF0E8;color:#B8400F;border:1px solid #F7C9B1;border-radius:999px;padding:3px 10px;font-weight:600;font-size:12px}
-.ow{background:#FFF0E8;color:#B8400F;border-radius:999px;padding:3px 10px;font-size:12px}
-.ib{width:26px;height:26px;border:1px solid var(--line);border-radius:7px;display:inline-flex;align-items:center;justify-content:center;color:var(--mute)}
 .ch2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
 .ch2 .card{padding:16px}
 .ch2 h4{font-size:15px}
@@ -302,18 +331,27 @@ header.top .btn{margin-left:auto}
 .phones figcaption{font-size:14px;font-weight:600;margin-top:14px}
 .phones figcaption span{display:block;font-weight:400;font-size:13px;color:var(--mute);margin-top:2px}
 
-/* decisions */
-.dt .hd,.dt .row{display:grid;grid-template-columns:44px 1fr 1fr 1fr;gap:24px}
-.dt .hd{padding:0 24px 12px}
-.dt .hd div{font:600 11px/1.4 Inter;letter-spacing:.12em;text-transform:uppercase}
-.dt .row{padding:22px 24px;margin-top:12px;align-items:start}
-.dt .num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font:600 13px/28px Inter;text-align:center}
-.dt h4{font-size:16.5px}
-.dt .c1 p{margin-top:4px;font-size:13.5px;color:var(--mute)}
-.dt .c2,.dt .c3{font-size:14.5px;line-height:1.5;padding-left:16px}
-.dt .c2{border-left:2px solid var(--ok)}
-.dt .c3{border-left:2px solid var(--ink)}
-.meas{display:inline-block;margin-top:10px;background:#F1EEEA;border-radius:999px;padding:4px 11px;font-size:12px;font-weight:600}
+/* summary + contents */
+.pib{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:16px;background:#fff;margin-top:36px;overflow:hidden;box-shadow:var(--shadow)}
+.pib div{padding:22px;border-right:1px solid var(--line)}.pib div:last-child{border-right:0}
+.pib .mono{color:var(--acc-d);display:block;margin-bottom:10px}
+.pib p{margin:0;font-size:15px;line-height:1.55;color:var(--ink2)}
+.pib p b{color:var(--ink);font-weight:600}
+.toc{margin-top:56px}
+.toc .tl{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.toc a{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.toc a:hover{border-color:var(--accent)}
+.toc a b{display:flex;gap:8px;align-items:baseline;font-size:14.5px;font-weight:600}
+.toc a b em{font:600 15px Fraunces,serif;font-style:normal;color:var(--accent)}
+.toc a span{display:block;font-size:12.5px;color:var(--mute);margin-top:2px;line-height:1.4}
+
+/* AI earns / not */
+.earn{background:var(--ai-t);border-color:#E4DCFA}
+.earn .mono{color:var(--ai)}.not .mono{color:var(--err)}
+.ck{list-style:none;margin:12px 0 0;padding:0}
+.ck li{position:relative;padding:6px 0 6px 26px;font-size:14.5px;line-height:1.5;color:var(--ink2)}
+.ck li::before{content:"✓";position:absolute;left:2px;top:6px;font-weight:700;color:var(--ai)}
+.not .ck li::before{content:"✕";color:var(--err)}
 
 /* measure */
 .ns{background:#1A1A1A;color:#fff;border-radius:20px;padding:32px;display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:center}
@@ -368,9 +406,14 @@ footer .w{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 footer a{color:inherit}
 
 @media(max-width:1060px){
- nav.sec{display:none}
- .uc,.fix,.core2,.aig,.wt-intro{grid-template-columns:1fr;gap:28px}
- .g4,.proc,.smap{grid-template-columns:repeat(2,1fr)}
+ html{scroll-padding-top:112px}
+ header.top .w{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:8px;row-gap:8px}
+ nav.sec{order:3;flex-basis:100%;margin:0}
+ .uc,.fix,.core2,.wt-intro{grid-template-columns:1fr;gap:28px}
+ .g4,.proc,.smap,.pib{grid-template-columns:repeat(2,1fr)}
+ .pib div:nth-child(2){border-right:0}.pib div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+ .toc .tl{grid-template-columns:repeat(3,1fr)}
+ .jm-hint{display:block;margin-top:24px}.jm-hint+.body{margin-top:10px}
  .pr:nth-child(2n)::after{display:none}
  .pr:not(:nth-child(2n))::after{display:block}
  .ia3{grid-template-columns:1fr}
@@ -378,7 +421,6 @@ footer a{color:inherit}
  .step{grid-template-columns:1fr;gap:20px;padding-top:56px}
  .phones{grid-template-columns:repeat(3,1fr)}
  .ns{grid-template-columns:1fr}
- .jr{grid-template-columns:130px 1fr 1fr 1.2fr}
  .mock{margin-bottom:40px}
 }
 @media(max-width:720px){
@@ -387,23 +429,16 @@ footer a{color:inherit}
  .hero{padding-top:56px}
  .brand span{display:none}
  .facts{grid-template-columns:1fr 1fr}
- .g2,.g3,.g4,.proc,.smap,.wi,.ch2,.goal{grid-template-columns:1fr}
+ .g2,.g3,.g4,.proc,.smap,.wi,.ch2,.goal,.pib{grid-template-columns:1fr}
+ .pib div{border-right:0!important;border-bottom:1px solid var(--line)}.pib div:last-child{border-bottom:0}
+ .toc .tl{grid-template-columns:1fr 1fr}
  .pr::after{display:none!important}
  .pr5{grid-template-columns:1fr}.pr5 .card,.pr5 .card:nth-child(4),.pr5 .card:nth-child(5){grid-column:auto}
  .ps{grid-template-columns:1fr}.arw{transform:rotate(90deg);margin:0 auto}
- .jr,.jr.h{grid-template-columns:1fr}
- .jr.h{display:none}
- .jr>div{padding:6px 18px}
- .jr .st{padding-top:16px}.jr>div:last-child{padding-bottom:16px}
- .jr .p::before{content:"Pain · ";font-weight:600}
- .jr .t::before{content:"Today · ";font-weight:600;color:var(--mute)}
- .jr .d{border-left:0}.jr .d::before{content:"With this design · ";font-weight:600;color:var(--ok)}
  .phones{grid-template-columns:1fr 1fr}
  .mr{grid-template-columns:1fr}.mr.h{display:none}
  .mr>div{padding:3px 18px}.mr>div:first-child{padding-top:14px}.mr>div:last-child{padding-bottom:14px}
  .mr .u::before{content:"User · ";font-weight:600}.mr .b::before{content:"Toast · ";font-weight:600}
- .dt .hd{display:none}
- .dt .row{grid-template-columns:1fr;gap:12px}
  .mock .x{right:-6px;top:-14px}
  .pop{position:static;margin-top:14px}
  .mock{margin-bottom:0}
@@ -416,7 +451,7 @@ footer a{color:inherit}
 <header class="top"><div class="w">
  <a class="brand" href="#top"><i></i>Toast Inventory <span>· Vithyanela</span></a>
  <nav class="sec" aria-label="Sections">
-  <a href="#role">Role</a><a href="#usecase">Use case</a><a href="#problem">Problem</a><a href="#solution">Solution</a><a href="#ia">IA</a><a href="#ai">Toast IQ</a><a href="#walkthrough">Walkthrough</a><a href="#decisions">Decisions</a><a href="#measure">Metrics</a>
+  <a href="#role">Role</a><a href="#problem">Problem</a><a href="#users">Users</a><a href="#journey">Journey</a><a href="#solution">Solution</a><a href="#ai">Toast IQ</a><a href="#walkthrough">Walkthrough</a><a href="#measure">Metrics</a>
  </nav>
  <a class="btn dark sm" href="prototype.html">Open prototype ↗</a>
 </div></header>
@@ -425,18 +460,41 @@ footer a{color:inherit}
 
 <!-- HEADER -->
 <div class="hero">
- <div class="mono">UX case study · Restaurant inventory · AI-assisted</div>
+ <div class="mono">Self-initiated case study · Toast Inventory · Product design</div>
  <h1>Invoices in. Costs right.<br><em>Books clean.</em></h1>
  <p class="lead">An AI-assisted flow for Toast Inventory that takes a supplier invoice from a crumpled paper at the back door to a correct bill in QuickBooks, and only asks a person about the lines that need one.</p>
- <div class="chips"><span class="chip">Desktop web · working prototype</span><span class="chip">iOS receiving · Figma</span><span class="chip">Research → strategy → UX → UI</span></div>
+ <div class="chips"><span class="chip">Working prototype · built with Claude</span><span class="chip">Restaurant, hybrid and retail</span><span class="chip">Desktop + iOS</span></div>
  <div class="acts"><a class="btn dark" href="prototype.html">Open the prototype ↗</a><a class="btn line" href="#walkthrough">Jump to the walkthrough</a></div>
  <div class="facts">
-  <div><span class="mono">My role</span><b>Research, product strategy, UX, UI and a working prototype</b></div>
-  <div><span class="mono">Scope</span><b>Capture → review → item mapping → accounting sync</b></div>
+  <div><span class="mono">My role</span><b>Research, product strategy, UX, UI and a working prototype built with Claude</b></div>
+  <div><span class="mono">Scope</span><b>Invoice capture → review → item mapping → accounting sync</b></div>
   <div><span class="mono">Timeline</span><b>One weekend, alongside a full-time role</b></div>
-  <div><span class="mono">Best viewed</span><b>Desktop. Mobile screens are in the Figma file</b></div>
+  <div><span class="mono">Best viewed</span><b>Desktop. Mobile screens and design system are in the Figma file</b></div>
+ </div>
+ <div class="pib">
+  <div><span class="mono">The problem</span><p>Invoices are still keyed in or re-checked by hand, so <b>stock, costs and the books drift apart</b> and margin losses show up weeks late.</p></div>
+  <div><span class="mono">The insight</span><p>Operators don’t need AI that’s “accurate”. They need to know <b>which lines to trust</b>, so they stop re-checking all of them.</p></div>
+  <div><span class="mono">The bet</span><p>Toast IQ reads everything, says how sure it is in plain words, and <b>asks a person only about the exceptions</b>. People always approve.</p></div>
+  <div><span class="mono">How we’d know</span><p><b>Time from invoice received to bill in the books</b>, and the share of lines that needed no human touch.</p></div>
  </div>
  <div class="frame hero-shot"><img src="img/inbox.jpg" alt="Invoices inbox with a Toast IQ summary of the three invoices that need the manager" width="2160" height="1350"></div>
+ <nav class="toc" aria-label="Contents">
+  <span class="mono">In this case study</span>
+  <div class="tl">
+   <a href="#role"><b><em>00</em>The role</b><span>What Toast asked for, and where it’s covered</span></a>
+   <a href="#usecase"><b><em>01</em>Use case</b><span>Maya, Monday at 11 PM</span></a>
+   <a href="#problem"><b><em>02</em>Problem</b><span>Why trust is the core problem</span></a>
+   <a href="#users"><b><em>03</em>Users</b><span>Maya, Jordan and Priya</span></a>
+   <a href="#journey"><b><em>04</em>User journey</b><span>Stage by stage, how it feels with and without</span></a>
+   <a href="#solution"><b><em>05–06</em>The idea</b><span>Read everything, ask only about exceptions</span></a>
+   <a href="#stores"><b><em>07</em>Store types</b><span>Restaurant, hybrid, bottle shop, grocery</span></a>
+   <a href="#process"><b><em>08–10</em>Process &amp; IA</b><span>How I got here, structure, principles</span></a>
+   <a href="#ai"><b><em>11–12</em>Toast IQ</b><span>Useful AI, and what it does when unsure</span></a>
+   <a href="#walkthrough"><b><em>13</em>Walkthrough</b><span>The screens, as Maya and Priya</span></a>
+   <a href="#ios"><b><em>14</em>iOS receiving</b><span>Jordan at the back door</span></a>
+   <a href="#measure"><b><em>15–16</em>Metrics &amp; next</b><span>How we’d know, and what I’d build next</span></a>
+  </div>
+ </nav>
 </div>
 
 <!-- 00 ROLE -->
@@ -498,9 +556,9 @@ footer a{color:inherit}
  <h2>Everyone finds out at month-end.</h2>
  <p class="sub">The receiver, the GM, the bookkeeper and the owner all learn a number was wrong long after it was cheap to fix.</p>
  <div class="body grid g4">
-  <div class="card role"><div class="lb" style="background:var(--warn-t);color:var(--warn)"><i style="background:#B07A10">J</i>Receiver · Jordan</div><div class="well ph"><img src="img/m2.jpg" alt="Phone scanning an invoice at the back door" loading="lazy" style="object-position:center 30%"></div><div class="out">Signed for a short.<br>Driver’s already gone.</div></div>
-  <div class="card role"><div class="lb" style="background:var(--blue-t);color:var(--blue)"><i style="background:var(--blue)">M</i>GM · Maya</div><div class="well ph"><img src="img/c/paper.jpg" alt="Invoice lines with a handwritten quantity" loading="lazy" style="object-position:left 40%"></div><div class="out">Lost 3 hours.<br>Re-checked every line.</div></div>
-  <div class="card role"><div class="lb" style="background:var(--ok-t);color:var(--ok)"><i style="background:var(--ok)">P</i>Bookkeeper · Priya</div><div class="well ph"><img src="img/c/sync.jpg" alt="Accounting sync with a bill kept out of the books" loading="lazy" style="object-position:58% 0"></div><div class="out">Books don’t match.<br>Calls the GM.</div></div>
+  <div class="card role"><div class="lb" style="background:var(--warn-t);color:var(--warn)"><i style="background:#B07A10">J</i>Jordan Lee · Receiver</div><div class="well ph"><img src="img/m2.jpg" alt="Phone scanning an invoice at the back door" loading="lazy" style="object-position:center 30%"></div><div class="out">Signed for a short.<br>Driver’s already gone.</div></div>
+  <div class="card role"><div class="lb" style="background:var(--blue-t);color:var(--blue)"><i style="background:var(--blue)">M</i>Maya Rodriguez · GM</div><div class="well ph"><img src="img/c/paper.jpg" alt="Invoice lines with a handwritten quantity" loading="lazy" style="object-position:left 40%"></div><div class="out">Lost 3 hours.<br>Re-checked every line.</div></div>
+  <div class="card role"><div class="lb" style="background:var(--ok-t);color:var(--ok)"><i style="background:var(--ok)">P</i>Priya Shah · Bookkeeper</div><div class="well ph"><img src="img/c/sync.jpg" alt="Accounting sync with a bill kept out of the books" loading="lazy" style="object-position:58% 0"></div><div class="out">Books don’t match.<br>Calls the GM.</div></div>
   <div class="card role"><div class="lb" style="background:var(--acc-t);color:var(--acc-d)"><i style="background:var(--accent)">$</i>Owner · the P&amp;L</div><div class="well ph"><img src="img/c/iq-banner.jpg" alt="Avocado price up 18 percent, margin drops" loading="lazy" style="object-position:0 100%"></div><div class="out">Price rise seen 3 weeks late.<br>Margin already gone.</div></div>
  </div>
  <div class="pays">
@@ -544,9 +602,95 @@ footer a{color:inherit}
  <div class="take">Trust is the core. Reading became the way in, approval the way out, and the rest became layers around it.</div>
 </section>
 
-<!-- 03 OBVIOUS FIX -->
+<!-- 03 USERS -->
+<section class="s" id="users">
+ <span class="tagp">03 · Users</span>
+ <h2>Three people touch every invoice. They want different things from it.</h2>
+ <p class="sub">Each one has their own job and permissions. You can switch between them in the prototype from the ⓘ note in the menu.</p>
+ <div class="body grid g3 ppl">
+  <div class="card">
+   <div class="ph-top"><div class="av" style="background:var(--blue)">MR</div><div><h3>Maya Rodriguez</h3><span>General Manager · South End &amp; Back Bay</span></div></div>
+   <div class="tags"><span class="tg">Approves</span><span class="tg">Owns food cost</span><span class="tg">After close</span></div>
+   <p class="q">“I just need to know the numbers are right without reading every line at 11 PM.”</p>
+   <div class="need"><b>Needs:</b> to know which lines to trust, and what changed in cost before she approves.</div>
+   <div class="cando"><div class="y">Reviews and approves invoices</div><div class="y">Creates and maps items</div><div class="y">Sees accounting sync</div></div>
+  </div>
+  <div class="card">
+   <div class="ph-top"><div class="av" style="background:#B07A10">JL</div><div><h3>Jordan Lee</h3><span>Receiver · South End</span></div></div>
+   <div class="tags"><span class="tg">iPhone</span><span class="tg">7 AM</span><span class="tg">Driver waiting</span></div>
+   <p class="q">“Is it all here? He’s in a hurry.”</p>
+   <div class="need"><b>Needs:</b> to check a delivery fast and flag a short with proof, before the driver leaves.</div>
+   <div class="cando"><div class="y">Scans and uploads invoices</div><div class="y">Answers quantity questions</div><div class="n">Can’t approve bills or see accounting</div></div>
+  </div>
+  <div class="card">
+   <div class="ph-top"><div class="av" style="background:var(--ok)">PS</div><div><h3>Priya Shah</h3><span>Bookkeeper · All locations</span></div></div>
+   <div class="tags"><span class="tg">QuickBooks</span><span class="tg">Month-end</span></div>
+   <p class="q">“Why is this bill posted twice, and where did the paper goods go?”</p>
+   <div class="need"><b>Needs:</b> Toast and QuickBooks to agree, without chasing the GM for answers.</div>
+   <div class="cando"><div class="y">Fixes accounting sync and GL accounts</div><div class="y">Views invoices</div><div class="n">Can’t approve bills</div></div>
+  </div>
+ </div>
+ <p class="src" style="font-size:14.5px;margin-top:20px">The same engine serves restaurants, retail and hybrid stores like Maya’s market and kitchen. <a href="#stores">See how it changes by store type →</a></p>
+ <div class="take">Different jobs, one invoice: each person sees only the part that’s theirs.</div>
+</section>
+
+<!-- 04 JOURNEY -->
+<section class="s" id="journey">
+ <span class="tagp">04 · User journey</span>
+ <h2>A week of invoices, from the back door to the books.</h2>
+ <p class="sub">Three people, six stages. The red line is how it feels today; the green line is how it feels with this design. <b>The lowest points today, reviewing at 11 PM and the month-end sync, are where the design does the most.</b></p>
+ <p class="src jm-hint">Swipe sideways to see all six stages →</p>
+ <div class="body jm-wrap"><div class="jm" role="table" aria-label="User journey with and without this design">
+  <div class="jm-row jm-head" role="row"><div role="columnheader">Stage</div>
+   <div role="columnheader"><b>Delivery</b><span class="who-j">Jordan · 7 AM</span></div>
+   <div role="columnheader"><b>Capture</b><span class="who-a">All week</span></div>
+   <div role="columnheader"><b>Review</b><span class="who-m">Maya · 11 PM</span></div>
+   <div role="columnheader"><b>Fix exceptions</b><span class="who-m">Maya</span></div>
+   <div role="columnheader"><b>Approve</b><span class="who-m">Maya</span></div>
+   <div role="columnheader"><b>Sync</b><span class="who-p">Priya · month-end</span></div>
+  </div>
+  <div class="jm-row" role="row"><div role="rowheader">Doing today</div>
+   <div role="cell">Counts cases, signs the paper</div><div role="cell">Paper, email PDFs and EDI in three places</div><div role="cell">Keys in or re-checks every line</div><div role="cell">Matches names, converts packs by hand</div><div role="cell">Approves, glances at food cost</div><div role="cell">Exports, fixes mismatches</div>
+  </div>
+  <div class="jm-row think" role="row"><div role="rowheader">Thinking</div>
+   <div role="cell">“Is it all here? He’s in a hurry.”</div><div role="cell">“Did the Sysco PDF even come in?”</div><div role="cell">“Do I really have to read all 34 lines?”</div><div role="cell">“Didn’t I map this chicken last week?”</div><div role="cell">“Why is food cost up again?”</div><div role="cell">“Why is this bill posted twice?”</div>
+  </div>
+  <div class="jm-row jm-emo" role="row"><div role="rowheader"><span>How it feels</span><span class="key"><span><i class="k-wo"></i>Without</span><span><i class="k-wi"></i>With this design</span></span><span class="ax">↑ calm<br>↓ stressed</span></div>
+   <div class="plotcell" role="cell" aria-label="Without: rushed, scattered, exhausted, repetitive, unsure, blindsided. With this design: quick, in one place, focused, taught once, confident, in control.">
+    <div class="plot">
+     <div class="mid"></div>
+     <svg viewBox="0 0 600 100" preserveAspectRatio="none" aria-hidden="true">
+      <polyline points="50,58 150,52 250,90 350,78 450,66 550,94" fill="none" stroke="#C62828" stroke-width="2.5" stroke-dasharray="6 5" vector-effect="non-scaling-stroke"/>
+      <polyline points="50,30 150,22 250,16 350,22 450,12 550,14" fill="none" stroke="#1E7B3C" stroke-width="3" vector-effect="non-scaling-stroke"/>
+     </svg>
+     <i class="dot jwo" style="--x:8.333%;--y:58%"></i><span class="em jwo" style="--x:8.333%;--y:58%">Rushed</span>
+     <i class="dot jwo" style="--x:25%;--y:52%"></i><span class="em jwo" style="--x:25%;--y:52%">Scattered</span>
+     <i class="dot jwo" style="--x:41.667%;--y:90%"></i><span class="em jwo" style="--x:41.667%;--y:90%">Exhausted</span>
+     <i class="dot jwo" style="--x:58.333%;--y:78%"></i><span class="em jwo" style="--x:58.333%;--y:78%">Repetitive</span>
+     <i class="dot jwo" style="--x:75%;--y:66%"></i><span class="em jwo" style="--x:75%;--y:66%">Unsure</span>
+     <i class="dot jwo" style="--x:91.667%;--y:94%"></i><span class="em jwo" style="--x:91.667%;--y:94%">Blindsided</span>
+     <i class="dot jwi" style="--x:8.333%;--y:30%"></i><span class="em jwi" style="--x:8.333%;--y:30%">Quick</span>
+     <i class="dot jwi" style="--x:25%;--y:22%"></i><span class="em jwi" style="--x:25%;--y:22%">In one place</span>
+     <i class="dot jwi" style="--x:41.667%;--y:16%"></i><span class="em jwi" style="--x:41.667%;--y:16%">Focused</span>
+     <i class="dot jwi" style="--x:58.333%;--y:22%"></i><span class="em jwi" style="--x:58.333%;--y:22%">Taught once</span>
+     <i class="dot jwi" style="--x:75%;--y:12%"></i><span class="em jwi" style="--x:75%;--y:12%">Confident</span>
+     <i class="dot jwi" style="--x:91.667%;--y:14%"></i><span class="em jwi" style="--x:91.667%;--y:14%">In control</span>
+    </div>
+   </div>
+  </div>
+  <div class="jm-row pain" role="row"><div role="rowheader">Pain point</div>
+   <div role="cell">Shorts get signed for</div><div role="cell">Lost, or entered twice</div><div role="cell">~3 hrs a week, after close</div><div role="cell">The same fix every week</div><div role="cell">Price rises seen weeks late</div><div role="cell">Silent failures</div>
+  </div>
+  <div class="jm-row with" role="row"><div role="rowheader">With this design</div>
+   <div role="cell">Scan on iPhone, tick lines, flag a short with a photo</div><div role="cell">One inbox, duplicate check, “Toast IQ is reading”</div><div role="cell">Only flagged lines need her; the rest show their evidence</div><div role="cell">Map once, reused forever; pack size → $/lb</div><div role="cell">Price changes with their margin impact, before approval</div><div role="cell">Held bills with a plain reason and a suggested fix</div>
+  </div>
+ </div></div>
+ <div class="take">The two lowest points today, reviewing at 11 PM and the month-end sync, are where the design does the most.</div>
+</section>
+
+<!-- 05 OBVIOUS FIX -->
 <section class="s" id="fix">
- <span class="tagp">03 · The obvious fix</span>
+ <span class="tagp">05 · The obvious fix</span>
  <div class="body fix" style="margin-top:0">
   <div>
    <h2>“Just let the AI read it.”</h2>
@@ -554,8 +698,8 @@ footer a{color:inherit}
    <ol class="steps">
     <li><b>1</b>Toast reads all 34 Sysco lines</li>
     <li><b>2</b>Every line says “High · 98%”</li>
-    <li><b>3</b>She can’t tell which lines are the 2%</li>
-    <li class="bad"><b>4</b>She re-checks all 34 anyway</li>
+    <li><b>3</b>Maya can’t tell which lines are the 2%</li>
+    <li class="bad"><b>4</b>Maya re-checks all 34 anyway</li>
    </ol>
   </div>
   <div class="card mock" aria-label="Illustration of the rejected approach">
@@ -579,7 +723,7 @@ footer a{color:inherit}
 
 <!-- 04 SOLUTION -->
 <section class="s" id="solution">
- <span class="tagp">04 · The idea</span>
+ <span class="tagp">06 · The idea</span>
  <h2>Toast IQ reads everything.<br>You check only what needs you.</h2>
  <p class="sub">How might we get a supplier invoice into stock, recipe costs and the books correctly, without a person re-checking every line?</p>
  <div class="body ps">
@@ -598,7 +742,7 @@ footer a{color:inherit}
 
 <!-- STORE TYPES -->
 <section class="s" id="stores">
- <span class="tagp">04 · Every kind of store</span>
+ <span class="tagp">07 · Every kind of store</span>
  <h2>One engine, every kind of store.</h2>
  <p class="sub">Toast serves restaurants, retail and hybrids like a café that sells packaged goods. Invoices look the same; what each line turns into doesn’t. <b>The flow stays the same and the rules change per store.</b> The location switcher shows each store’s type, because it changes which items, units and accounts apply.</p>
  <div class="body grid g4 stt">
@@ -636,7 +780,7 @@ footer a{color:inherit}
 
 <!-- 05 PROCESS -->
 <section class="s" id="process">
- <span class="tagp">06 · Process</span>
+ <span class="tagp">08 · Process</span>
  <h2>How I got here</h2>
  <p class="sub">My process wasn’t linear: the inbox structure changed after I critiqued it as the GM at 11 PM.</p>
  <div class="body proc">
@@ -652,25 +796,9 @@ footer a{color:inherit}
  <div class="take">Process: brief → domain → roles → journey → principles → IA → AI model → prototype → metrics.</div>
 </section>
 
-<!-- 06 JOURNEY -->
-<section class="s" id="journey">
- <span class="tagp">07 · Journey</span>
- <h2>A week of invoices, from the back door to the books.</h2>
- <div class="body jt" role="table" aria-label="Invoice journey">
-  <div class="jr h" role="row"><div role="columnheader">Stage</div><div role="columnheader">Today</div><div class="p" role="columnheader">Pain</div><div class="d" role="columnheader">With this design</div></div>
-  <div class="jr" role="row"><div class="st" role="cell"><b>Delivery</b><span>Jordan · 7 AM</span></div><div class="t" role="cell">Counts cases, signs paper</div><div class="p" role="cell">Shorts get signed for</div><div class="d" role="cell">Scan on iPhone, tick lines, flag a short with a photo</div></div>
-  <div class="jr" role="row"><div class="st" role="cell"><b>Capture</b><span>Inbox</span></div><div class="t" role="cell">Paper, email PDFs and EDI in three places</div><div class="p" role="cell">Lost or entered twice</div><div class="d" role="cell">One inbox, duplicate detection, “Toast IQ is reading”</div></div>
-  <div class="jr" role="row"><div class="st" role="cell"><b>Review</b><span>Maya · after close</span></div><div class="t" role="cell">Keys or re-checks every line</div><div class="p" role="cell">~3 hrs a week</div><div class="d" role="cell">Only flagged lines need her; the rest show their evidence</div></div>
-  <div class="jr" role="row"><div class="st" role="cell"><b>Fix exceptions</b><span>Maya</span></div><div class="t" role="cell">Matches names, converts packs by hand</div><div class="p" role="cell">Same fix every week</div><div class="d" role="cell">Map once, reused forever; pack size → $/lb for her</div></div>
-  <div class="jr" role="row"><div class="st" role="cell"><b>Approve</b><span>Maya</span></div><div class="t" role="cell">Approves, glances at food cost</div><div class="p" role="cell">Price rises seen weeks late</div><div class="d" role="cell">Price changes with their margin impact, before approval</div></div>
-  <div class="jr" role="row"><div class="st" role="cell"><b>Sync</b><span>Priya</span></div><div class="t" role="cell">Exports, fixes mismatches</div><div class="p" role="cell">Silent failures</div><div class="d" role="cell">Held bills with a plain reason and a suggested fix</div></div>
- </div>
- <div class="take">The biggest wins sit in Review and Sync: that’s where the hours and the silent errors are.</div>
-</section>
-
 <!-- 07 IA -->
 <section class="s" id="ia">
- <span class="tagp">08 · Information architecture</span>
+ <span class="tagp">09 · Information architecture</span>
  <h2>Built around the invoice’s life, not around menus.</h2>
  <p class="sub">Every screen answers one question. Inbox: what needs me? Review: is this right? Mappings: will it be right next time? Sync: did it reach the books?</p>
  <div class="body ia3">
@@ -715,7 +843,7 @@ footer a{color:inherit}
 
 <!-- SITEMAP -->
 <section class="s" id="sitemap">
- <span class="tagp">08 · Information architecture</span>
+ <span class="tagp">09 · Information architecture</span>
  <h2>Sitemap</h2>
  <div class="body">
   <div class="root"><span>Toast back office</span></div>
@@ -732,7 +860,7 @@ footer a{color:inherit}
 
 <!-- 08 PRINCIPLES -->
 <section class="s" id="principles">
- <span class="tagp">09 · Principles</span>
+ <span class="tagp">10 · Principles</span>
  <h2>Five rules that settled most arguments.</h2>
  <div class="body pr5">
   <div class="card"><div class="n">01</div><h4>Ask only what needs a human</h4><p>The screen leads with the question (“How many avocado cases came in?”), not the invoice code.</p></div>
@@ -745,21 +873,20 @@ footer a{color:inherit}
 
 <!-- 09 TOAST IQ -->
 <section class="s" id="ai">
- <span class="tagp">10 · Toast IQ</span>
+ <span class="tagp">11 · Toast IQ</span>
  <h2>AI reads. People approve.</h2>
  <p class="sub">My test for every AI feature: does it remove a step a person does today, and can they see why it’s right?</p>
- <div class="body aig">
+ <div class="body grid g2">
+  <div class="card earn"><span class="mono">Earns its place</span><h4>Reads, matches, suggests</h4><ul class="ck"><li>Reads invoice headers and line items, including handwriting</li><li>Matches supplier codes to your items and converts pack sizes</li><li>Suggests GL accounts from how your bookkeeper actually posts</li><li>Answers “what’s left before tonight’s sync?” as a live checklist</li></ul></div>
+  <div class="card not"><span class="mono">Deliberately not</span><h4>Decides, pays, guesses silently</h4><ul class="ck"><li>Never approves, pays or posts a bill</li><li>Never hides a low-confidence match behind a green tick</li><li>Declines off-topic questions and points back to what it can do</li><li>Asks a follow-up when a question is vague</li></ul></div>
+ </div>
+ <div style="margin-top:36px">
   <div>
-   <span class="lbl r">Rejected</span>
-   <div class="rejc"><div class="x" aria-hidden="true">✕</div><div class="demo"><span class="og">✦ Suggested</span><span class="ow">⚠ Price up 18%</span></div><p><b>Toast IQ in Toast orange.</b> Orange already meant brand, location and warnings, so suggestions looked like alerts.</p></div>
-   <div class="rejc"><div class="x" aria-hidden="true">✕</div><div class="demo"><span class="hi">High · 98%</span><span class="ib">✓</span><span class="ib">✕</span></div><p><b>A percentage and icon-only buttons.</b> People missed the icons and couldn’t act on the number.</p></div>
-  </div>
-  <div>
-   <span class="lbl g">Chosen · AI inside the tasks</span>
+   <span class="lbl g">Where it shows up · inside the tasks, not a separate chatbot</span>
    <div class="ch2">
-    <div class="card"><h4>Inbox: a summary with a time estimate</h4><div class="well"><img src="img/c/iq-banner.jpg" alt="Toast IQ summary: 3 invoices need you, about 2 minutes" loading="lazy" style="object-position:left top"></div></div>
+    <div class="card"><h4>Inbox: a summary with a time estimate</h4><div class="well"><img src="img/c/inbox-169.jpg" alt="Toast IQ summary: 3 invoices need you, about 2 minutes" loading="lazy"></div></div>
     <div class="card"><h4>Mappings: evidence, not a score</h4><div class="well"><img src="img/c/map-rows.jpg" alt="Mapping rows marked Exact match, Likely and Unsure" loading="lazy"></div></div>
-    <div class="card"><h4>Accounting: a suggested fix</h4><div class="well"><img src="img/c/sync.jpg" alt="Sync failure with a suggested GL account" loading="lazy" style="object-position:left 70%"></div></div>
+    <div class="card"><h4>Accounting: a suggested fix</h4><div class="well"><img src="img/c/sync-169.jpg" alt="Sync failure with a suggested GL account" loading="lazy"></div></div>
     <div class="card"><h4>Ask Toast IQ: a checklist, not a chatbot</h4><div class="well"><img src="img/c/iq-panel.jpg" alt="Toast IQ panel listing five to-dos before tonight's sync" loading="lazy"></div></div>
    </div>
    <div class="aibar">Every follow-up opens <b>one docked Toast IQ panel</b> that already knows the location and week. It never approves, pays or posts a bill.</div>
@@ -775,7 +902,7 @@ footer a{color:inherit}
 
 <!-- 10 EDGE CASES -->
 <section class="s" id="unsure">
- <span class="tagp">11 · Edge cases</span>
+ <span class="tagp">12 · Edge cases</span>
  <h2>What if Toast IQ isn’t sure?</h2>
  <p class="sub">The promise only works if the interface is honest when the paper is messy. It never fakes a green tick.</p>
  <div class="body card qm">
@@ -797,9 +924,9 @@ footer a{color:inherit}
 
 <!-- 11 WALKTHROUGH -->
 <section class="s" id="walkthrough">
- <span class="tagp">12 · Walkthrough</span>
+ <span class="tagp">13 · Walkthrough</span>
  <h2>Try it as Maya.</h2>
- <p class="sub">Monday after close: 14 invoices this week, 3 need her. Follow her through it, then click through the same screens in the prototype.</p>
+ <p class="sub">Monday after close: 14 invoices this week, 3 need Maya. Follow her through the screens, with Priya picking up the sync in step 04, then click through the same screens in the prototype.</p>
  <div class="body wt-intro">
   <div class="card">
    <div class="mini"><div class="av">MR</div><div><h4>Maya Rodriguez</h4><span>General Manager · South End &amp; Back Bay</span></div></div>
@@ -810,21 +937,21 @@ footer a{color:inherit}
 
  <div class="step">
   <div><div class="n">01</div><h3>Invoices inbox</h3><div class="q">“What needs me?”</div>
-   <div class="qa"><div class="u"><b>She sees</b>3 invoices need you · about 2 min</div><div class="a"><b>Toast IQ</b>Names them: Sysco quantity, 2 new wines, avocado price</div></div>
+   <div class="qa"><div class="u"><b>Maya sees</b>3 invoices need you · about 2 min</div><div class="a"><b>Toast IQ</b>Names them: Sysco quantity, 2 new wines, avocado price</div></div>
    <div class="chg"><b>What changed</b>Sorted by urgency. “Approve 8 ready · $10,524” shows the money before the click, then confirms with a 7-second undo.</div>
    <a class="btn line sm" href="prototype.html#invoices">Open in prototype ↗</a></div>
   <div class="frame"><img src="img/inbox.jpg" alt="Invoices inbox sorted by what needs the manager" loading="lazy" width="2160" height="1350"></div>
  </div>
  <div class="step">
   <div><div class="n">02</div><h3>Review an invoice</h3><div class="q">“Is this right?”</div>
-   <div class="qa"><div class="u"><b>She sees</b>3 things need you · 32 of 34 lines confirmed</div><div class="a"><b>Toast IQ</b>Highlights line 14 and line 22 on the paper</div></div>
+   <div class="qa"><div class="u"><b>Maya sees</b>3 things need you · 32 of 34 lines confirmed</div><div class="a"><b>Toast IQ</b>Highlights line 14 and line 22 on the paper</div></div>
    <div class="chg"><b>What changed</b>Question first, one reason, money on the answers. “Approve · 3 left” explains why it’s locked.</div>
    <a class="btn line sm" href="prototype.html#review-sysco">Open in prototype ↗</a></div>
   <div class="frame"><img src="img/review.jpg" alt="Invoice review with the paper invoice on the left and three questions on the right" loading="lazy" width="2160" height="1350"></div>
  </div>
  <div class="step">
   <div><div class="n">03</div><h3>Item mappings</h3><div class="q">“Will it be right next time?”</div>
-   <div class="qa"><div class="u"><b>She sees</b>31 exact matches · Accept all 31</div><div class="a"><b>Toast IQ</b>Chicken breast: 3 of 4 checks pass, first order from Sysco</div></div>
+   <div class="qa"><div class="u"><b>Maya sees</b>31 exact matches · Accept all 31</div><div class="a"><b>Toast IQ</b>Chicken breast: 3 of 4 checks pass, first order from Sysco</div></div>
    <div class="chg"><b>What changed</b>Bars, a word and a reason instead of a %. Accept and Change are labelled on every row.</div>
    <a class="btn line sm" href="prototype.html#mappings">Open in prototype ↗</a></div>
   <div class="frame"><img src="img/mappings.jpg" alt="Item mappings with confidence signals and an evidence panel" loading="lazy" width="2160" height="1350"></div>
@@ -838,14 +965,14 @@ footer a{color:inherit}
  </div>
  <div class="step">
   <div><div class="n">05</div><h3>Ask Toast IQ</h3><div class="q">“What’s left before tonight?”</div>
-   <div class="qa"><div class="u"><b>She asks</b>What’s left before tonight’s sync?</div><div class="a"><b>Toast IQ</b>Checked 14 invoices and the sync: five to-dos, ticked off as she goes</div></div>
+   <div class="qa"><div class="u"><b>Maya asks</b>What’s left before tonight’s sync?</div><div class="a"><b>Toast IQ</b>Checked 14 invoices and the sync: five to-dos, ticked off as she goes</div></div>
    <div class="chg"><b>What changed</b>A finish-line checklist, not a chatbot. Vague asks get a follow-up; “approve everything” is declined.</div>
    <a class="btn line sm" href="prototype.html#invoices">Open in prototype ↗</a></div>
   <div class="frame"><img src="img/iq.jpg" alt="Toast IQ panel answering what is left before tonight's sync" loading="lazy" width="2160" height="1350"></div>
  </div>
  <div class="step">
   <div><div class="n">06</div><h3>Upload</h3><div class="q">“Did everything get read?”</div>
-   <div class="qa"><div class="u"><b>She sees</b>5 files · 3 read · 2 need you</div><div class="a"><b>Toast IQ</b>Splits a two-invoice scan; pauses a likely duplicate</div></div>
+   <div class="qa"><div class="u"><b>Maya sees</b>5 files · 3 read · 2 need you</div><div class="a"><b>Toast IQ</b>Splits a two-invoice scan; pauses a likely duplicate</div></div>
    <div class="chg"><b>What changed</b>Problems first. Each file says what it became: “Sysco Boston · 34 lines”.</div>
    <a class="btn line sm" href="prototype.html#invoices">Open in prototype ↗</a></div>
   <div class="frame"><img src="img/upload-done.jpg" alt="Upload window with files that need attention and files read" loading="lazy" width="2160" height="1350"></div>
@@ -855,7 +982,7 @@ footer a{color:inherit}
 
 <!-- 12 iOS -->
 <section class="s" id="ios">
- <span class="tagp">13 · iOS receiving</span>
+ <span class="tagp">14 · iOS receiving</span>
  <h2>Same promise, one thumb.</h2>
  <p class="sub">At the back door at 7 AM, with the driver waiting. Jordan scans, ticks lines and flags a short. He can’t approve bills. Designed in Figma.</p>
  <div class="body phones">
@@ -866,22 +993,6 @@ footer a{color:inherit}
   <figure><img src="img/m5.jpg" alt="Delivery received confirmation" loading="lazy"><figcaption>Received<span>“Done, driver can go”</span></figcaption></figure>
  </div>
  <p class="src" style="margin-top:20px">Plus offline, camera access off, short delivery with a credit request, and receiver-can’t-approve states in the Figma file.</p>
-</section>
-
-<!-- 13 DECISIONS -->
-<section class="s" id="decisions">
- <span class="tagp">14 · Decisions I changed</span>
- <h2>Every re-check is a cost.</h2>
- <p class="sub">I critiqued every screen as the GM at 11 PM. Each change below came from a moment where she would have stopped to double-check.</p>
- <div class="body dt">
-  <div class="hd"><div></div><div class="lbl r">V1 problem</div><div class="lbl g">V2 fix</div><div class="lbl" style="color:var(--ink)">Why it matters</div></div>
-  <div class="card row"><div class="num">1</div><div class="c1"><h4>Confidence as “High · 98%”</h4><p>With a bar and two icon-only buttons.</p></div><div class="c2">Signal bars + “Exact match / Likely / Unsure” + one reason, and labelled Accept / Change.</div><div class="c3">People missed the icons and couldn’t act on the %.<br><span class="meas">Measure: re-check rate of exact matches</span></div></div>
-  <div class="card row"><div class="num">2</div><div class="c1"><h4>Toast IQ in Toast orange</h4><p>The same colour as brand and warnings.</p></div><div class="c2">Its own violet-to-pink orb gradient, used only for AI.</div><div class="c3">AI suggestions stopped looking like alerts.</div></div>
-  <div class="card row"><div class="num">3</div><div class="c1"><h4>Review cards led with codes</h4><p>Invoice code and line maths first.</p></div><div class="c2">Question first, one-line reason, money on the answer buttons.</div><div class="c3">Half the height; each decision readable at a glance.<br><span class="meas">Measure: time per reviewed invoice</span></div></div>
-  <div class="card row"><div class="num">4</div><div class="c1"><h4>Coloured tabs</h4><p>Status-coloured, then blue against an orange menu.</p></div><div class="c2">Neutral tabs with one dark active chip. Colour only for status on the rows.</div><div class="c3">When a colour means one thing, people recognise instead of reading.</div></div>
-  <div class="card row"><div class="num">5</div><div class="c1"><h4>“Show” did nothing visible</h4><p>It raised a toast and changed nothing.</p></div><div class="c2">Expands the matched lines in place and tints them on the paper.</div><div class="c3">When the screen changes, the change is the feedback.</div></div>
-  <div class="card row"><div class="num">6</div><div class="c1"><h4>Sections inside “All”</h4><p>Plus a “Show 6 more” list.</p></div><div class="c2">One urgency-sorted list; tabs for the jobs; older invoices behind “View history”.</div><div class="c3">No section duplicates a tab, so nothing appears twice.</div></div>
- </div>
 </section>
 
 <!-- 14 MEASURE -->
@@ -933,7 +1044,7 @@ footer a{color:inherit}
 <footer><div class="w"><span>Concept by Vithyanela · Not affiliated with Toast · All data is fictional</span><a href="#top">Back to top ↑</a></div></footer>
 <script>
 const links=[...document.querySelectorAll('nav.sec a')];
-const map={stores:'solution',process:'solution',journey:'solution',core:'problem',fix:'problem',sitemap:'ia',principles:'ia',unsure:'ai',ios:'walkthrough',next:'measure'};
+const map={usecase:'problem',fix:'solution',stores:'solution',process:'solution',ia:'solution',core:'problem',sitemap:'solution',principles:'solution',unsure:'ai',ios:'walkthrough',next:'measure'};
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;const id=map[e.target.id]||e.target.id;links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+id))})},{rootMargin:'-40% 0px -55% 0px'});
 document.querySelectorAll('section.s').forEach(s=>io.observe(s));
 </script>
