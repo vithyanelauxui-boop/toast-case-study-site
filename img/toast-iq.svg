@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="tiqA" gradientUnits="userSpaceOnUse" x1="70" y1="40" x2="112" y2="250">
+      <stop offset="0" stop-color="#FF2E1F"/>
+      <stop offset="0.42" stop-color="#FF541A"/>
+      <stop offset="0.66" stop-color="#FCA82C"/>
+      <stop offset="1" stop-color="#F8DA98"/>
+    </linearGradient>
+    <linearGradient id="tiqB" gradientUnits="userSpaceOnUse" x1="128" y1="120" x2="222" y2="150">
+      <stop offset="0" stop-color="#B07CF0" stop-opacity="0"/>
+      <stop offset="0.3" stop-color="#A47BF4" stop-opacity="0.92"/>
+      <stop offset="0.66" stop-color="#5C95FB"/>
+      <stop offset="1" stop-color="#08A6FF"/>
+    </linearGradient>
+    <linearGradient id="tiqC" gradientUnits="userSpaceOnUse" x1="180" y1="14" x2="236" y2="82">
+      <stop offset="0" stop-color="#FF3A22"/>
+      <stop offset="1" stop-color="#FF6A12"/>
+    </linearGradient>
+    <mask id="tiqM" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <path d="M112 36Q124 128 216 140Q124 152 112 244Q100 152 8 140Q100 128 112 36Z" fill="#fff" stroke="#fff" stroke-width="14" stroke-linejoin="round"/>
+    </mask>
+  </defs>
+  <g mask="url(#tiqM)">
+    <rect width="256" height="256" fill="url(#tiqA)"/>
+    <rect width="256" height="256" fill="url(#tiqB)"/>
+  </g>
+  <path d="M206 12Q210 42 240 46Q210 50 206 80Q202 50 172 46Q202 42 206 12Z" fill="url(#tiqC)" stroke="url(#tiqC)" stroke-width="9" stroke-linejoin="round"/>
+</svg>

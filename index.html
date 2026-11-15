@@ -11,7 +11,7 @@
 :root{
  --ink:#1A1A1A;--ink2:#4A4744;--mute:#76716B;--line:#ECE7E1;--grid:#F2EFEA;--bg:#FCFBF9;
  --accent:#FF4C00;--acc-d:#B8400F;--acc-t:#FDEEE8;--acc-b:#FFC9B0;--take:#FFF1EA;--acc-dk:#FF8A57;
- --blue:#2C51A9;--blue-t:#EEF2FB;--ai:#5B45D6;--ai-t:#F4F1FF;
+ --blue:#2C51A9;--blue-t:#EEF2FB;--ai:#C43D16;--ai-t:#FFF6F1;
  --ok:#1E7B3C;--ok-t:#EAF6EE;--warn:#8A5A00;--warn-t:#FFF5DE;--err:#C62828;--err-t:#FDEDEC;
  --shadow:0 20px 44px -30px rgba(110,60,30,.32);
 }
@@ -58,6 +58,7 @@ header.top .btn{margin-left:auto}
 .hero-shot{margin-top:56px}
 .frame{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#fff;box-shadow:0 34px 70px -36px rgba(60,35,20,.42)}
 .frame img{width:100%;height:auto}
+picture{display:block}
 
 /* section scaffold */
 .s{padding:128px 0 0}
@@ -277,7 +278,7 @@ header.top .btn{margin-left:auto}
 .ch2 .card{padding:16px}
 .ch2 h4{font-size:15px}
 .ch2 .well{margin-top:12px;border:1px solid var(--line);aspect-ratio:16/9}
-.aibar{margin-top:16px;border-radius:14px;padding:18px 22px;background:linear-gradient(120deg,#5B45D6,#8A4FD0 55%,#C7508F);color:#fff;font-size:15px;line-height:1.5;box-shadow:0 18px 36px -20px rgba(91,69,214,.6)}
+.aibar{margin-top:16px;border-radius:14px;padding:18px 22px;background:linear-gradient(120deg,#E8401C,#EE7A1A 30%,#8F5FEA 68%,#1680E6);color:#fff;font-size:15px;line-height:1.5;box-shadow:0 18px 36px -20px rgba(232,64,28,.45)}
 .conf{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
 .cf{display:inline-flex;align-items:center;font-size:14px;font-weight:600;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 13px;gap:4px}
 .cf small{font-weight:400;color:var(--mute);font-size:13.5px}
@@ -346,7 +347,7 @@ header.top .btn{margin-left:auto}
 .toc a span{display:block;font-size:12.5px;color:var(--mute);margin-top:2px;line-height:1.4}
 
 /* AI earns / not */
-.earn{background:var(--ai-t);border-color:#E4DCFA}
+.earn{background:var(--ai-t);border-color:#F3D3C6}
 .earn .mono{color:var(--ai)}.not .mono{color:var(--err)}
 .ck{list-style:none;margin:12px 0 0;padding:0}
 .ck li{position:relative;padding:6px 0 6px 26px;font-size:14.5px;line-height:1.5;color:var(--ink2)}
@@ -477,7 +478,7 @@ footer a{color:inherit}
   <div><span class="mono">The bet</span><p>Toast IQ reads everything, says how sure it is in plain words, and <b>asks a person only about the exceptions</b>. People always approve.</p></div>
   <div><span class="mono">How we’d know</span><p><b>Time from invoice received to bill in the books</b>, and the share of lines that needed no human touch.</p></div>
  </div>
- <div class="frame hero-shot"><img src="img/inbox.jpg" alt="Invoices inbox with a Toast IQ summary of the three invoices that need the manager" width="2160" height="1350"></div>
+ <div class="frame hero-shot"><picture><source media="(max-width:640px)" srcset="img/s/inbox-169.jpg"><img src="img/s/inbox.jpg" alt="Toast Invoices inbox: Toast IQ says 3 invoices need you, Sysco short delivery, Southern Glazer’s new wines, Baldor avocado price" width="2160" height="1350"></picture></div>
  <nav class="toc" aria-label="Contents">
   <span class="mono">In this case study</span>
   <div class="tl">
@@ -503,6 +504,7 @@ footer a{color:inherit}
  <h2>Built around what the role asks for.</h2>
  <p class="sub">Toast didn’t ask for an assignment. I made one before our conversation to show how I’d think in this role: <b>one journey, taken end to end, mapped to what the inventory team is building</b> for restaurants, retail and everything in between.</p>
  <div class="scope"><b>A note on scope.</b> I took one problem and one user journey (invoice capture → review → item mapping → accounting sync) to show how I think as a product designer. There are many more flows to go deep on, like item creation, catalog management and how the catalog gets built in the first place. I did this over a weekend alongside my full-time job. Given more time, I’d go deep on every one of them, and I’m confident doing that work.</div>
+ <div class="scope" style="margin-top:14px"><b>What Toast already does, and what I’m not claiming.</b> Toast’s public help docs already describe AI invoice scanning, invoice import with column mapping and item matching, and PO receiving. Toast IQ Inventory is in limited release, and QuickBooks Online is documented for the US, with CSV export elsewhere. So this isn’t “AI reads invoices.” It’s the connective tissue: what happens <b>after</b> the read, when the PO, what physically arrived, the bill and the books disagree.</div>
  <div class="body mt" role="table" aria-label="What the role asks for and where it is covered">
   <div class="mr h" role="row"><div role="columnheader">The role asks for</div><div role="columnheader">Where it is here</div><div class="u" role="columnheader">For the user</div><div class="b" role="columnheader">For Toast</div></div>
   <div class="mr" role="row"><div role="cell"><b>AI that reads invoice headers and line items</b></div><div role="cell"><a href="#walkthrough">Upload and Review</a></div><div class="u" role="cell">No keying at 11 PM</div><div class="b" role="cell">Faster invoice-to-books; fewer support calls</div></div>
@@ -524,12 +526,12 @@ footer a{color:inherit}
  <h2>Two cases came in.<br>The invoice said one.</h2>
  <div class="body uc">
   <div>
-   <p class="story">Monday, 11 PM. Maya is approving the week’s invoices for Harbor &amp; Vine. On the Sysco paper, the receiver wrote a “2” over the printed “1” for avocados. Chicken breast is a code she’s never seen. And Baldor quietly raised the avocado price 18%. <b>She has 48 more invoices to go, so she approves what was typed in.</b></p>
+   <p class="story">Monday, 11 PM. Maya is approving the week’s invoices for Harbor &amp; Vine. Sysco billed 2 cases of avocados, but Jordan wrote “1 rec’d” on the paper at the back door. Chicken breast is a code she’s never seen. And Baldor quietly raised the avocado price 18%. <b>She has 48 more invoices to go, so she approves what was typed in.</b></p>
    <p class="story" style="margin-top:18px">She runs a hybrid store: a market and a kitchen. The same Sysco delivery stocks the shelf and the line, and each line has to land in the right place: stock, recipe cost and the right account in QuickBooks.</p>
   </div>
   <div>
    <div class="card pcard">
-    <div class="ban"><img src="img/c/paper.jpg" alt="Invoice lines with the avocado and chicken lines highlighted" loading="lazy"></div>
+    <div class="ban"><img src="img/s/paper.jpg" alt="Invoice lines 14 and 22 highlighted; the receiver wrote 1 rec’d next to the 2 billed avocado cases" loading="lazy"></div>
     <div class="av">MR</div>
     <div class="in">
      <h3>Maya Rodriguez</h3>
@@ -547,7 +549,7 @@ footer a{color:inherit}
   <div class="card stat"><div class="num">3<small>wks</small></div><p>How long a quiet supplier price rise can go unnoticed before it shows up in margin.</p></div>
  </div>
  <p class="src">Scenario figures used to frame the design, not measured data. Validating them with operators is the first thing I’d do.</p>
- <div class="take">One handwritten “2”. Forty-nine invoices. And nobody checks it until the P&amp;L.</div>
+ <div class="take">One short case. Forty-nine invoices. And nobody checks it until the P&amp;L.</div>
 </section>
 
 <!-- 02 PROBLEM -->
@@ -557,7 +559,7 @@ footer a{color:inherit}
  <p class="sub">The receiver, the GM, the bookkeeper and the owner all learn a number was wrong long after it was cheap to fix.</p>
  <div class="body grid g4">
   <div class="card role"><div class="lb" style="background:var(--warn-t);color:var(--warn)"><i style="background:#B07A10">J</i>Jordan Lee · Receiver</div><div class="well ph"><img src="img/m2.jpg" alt="Phone scanning an invoice at the back door" loading="lazy" style="object-position:center 30%"></div><div class="out">Signed for a short.<br>Driver’s already gone.</div></div>
-  <div class="card role"><div class="lb" style="background:var(--blue-t);color:var(--blue)"><i style="background:var(--blue)">M</i>Maya Rodriguez · GM</div><div class="well ph"><img src="img/c/paper.jpg" alt="Invoice lines with a handwritten quantity" loading="lazy" style="object-position:left 40%"></div><div class="out">Lost 3 hours.<br>Re-checked every line.</div></div>
+  <div class="card role"><div class="lb" style="background:var(--blue-t);color:var(--blue)"><i style="background:var(--blue)">M</i>Maya Rodriguez · GM</div><div class="well ph"><img src="img/s/paper.jpg" alt="Invoice lines with a handwritten note from the receiver" loading="lazy" style="object-position:center"></div><div class="out">Lost 3 hours.<br>Re-checked every line.</div></div>
   <div class="card role"><div class="lb" style="background:var(--ok-t);color:var(--ok)"><i style="background:var(--ok)">P</i>Priya Shah · Bookkeeper</div><div class="well ph"><img src="img/c/sync.jpg" alt="Accounting sync with a bill kept out of the books" loading="lazy" style="object-position:58% 0"></div><div class="out">Books don’t match.<br>Calls the GM.</div></div>
   <div class="card role"><div class="lb" style="background:var(--acc-t);color:var(--acc-d)"><i style="background:var(--accent)">$</i>Owner · the P&amp;L</div><div class="well ph"><img src="img/c/iq-banner.jpg" alt="Avocado price up 18 percent, margin drops" loading="lazy" style="object-position:0 100%"></div><div class="out">Price rise seen 3 weeks late.<br>Margin already gone.</div></div>
  </div>
@@ -620,7 +622,7 @@ footer a{color:inherit}
    <div class="tags"><span class="tg">iPhone</span><span class="tg">7 AM</span><span class="tg">Driver waiting</span></div>
    <p class="q">“Is it all here? He’s in a hurry.”</p>
    <div class="need"><b>Needs:</b> to check a delivery fast and flag a short with proof, before the driver leaves.</div>
-   <div class="cando"><div class="y">Scans and uploads invoices</div><div class="y">Answers quantity questions</div><div class="n">Can’t approve bills or see accounting</div></div>
+   <div class="cando"><div class="y">Scans and uploads invoices</div><div class="y">Records what arrived at the door</div><div class="n">Can’t approve bills or see accounting</div></div>
   </div>
   <div class="card">
    <div class="ph-top"><div class="av" style="background:var(--ok)">PS</div><div><h3>Priya Shah</h3><span>Bookkeeper · All locations</span></div></div>
@@ -716,7 +718,7 @@ footer a{color:inherit}
  <div class="grid g3" style="margin-top:56px">
   <div class="card"><h4>It’s equally sure about everything</h4><p>98% on the wrong line looks exactly like 98% on the right one.</p></div>
   <div class="card"><h4>A number she can’t act on</h4><p>Nobody can act on the difference between 97 and 99.</p></div>
-  <div class="card"><h4>It reads, but never asks</h4><p>A handwritten “2” over a printed “1” needs a person, not a guess.</p></div>
+  <div class="card"><h4>It reads, but never asks</h4><p>A billed “2” next to a received “1” needs a person, not a guess.</p></div>
  </div>
  <div class="take">A confidence score guesses trust. It doesn’t earn it.</div>
 </section>
@@ -734,8 +736,8 @@ footer a{color:inherit}
  <div class="h3s">How it works</div>
  <div class="grid g3" style="margin-top:18px">
   <div class="card how"><h4><em>01</em>Read everything</h4><ul class="bl"><li>Email, EDI, scans and photos land in one inbox.</li><li>Duplicates are paused so nothing is paid twice.</li></ul><div class="well"><img src="img/c/upload-modal.jpg" alt="Upload window listing files that need attention and files that were read" loading="lazy"></div></div>
-  <div class="card how"><h4><em>02</em>Ask only what needs a human</h4><ul class="bl"><li>Questions, not codes: “How many avocado cases came in?”</li><li>Each answer shows its money impact.</li></ul><div class="well"><img src="img/c/review-cards.jpg" alt="Three review questions with answer buttons" loading="lazy"></div></div>
-  <div class="card how"><h4><em>03</em>Show the evidence</h4><ul class="bl"><li>“Exact match · UPC matches”, not “98%”.</li><li>Every flagged line is highlighted on the paper.</li></ul><div class="well"><img src="img/c/evidence.jpg" alt="Toast IQ suggestion with an evidence checklist" loading="lazy"></div></div>
+  <div class="card how"><h4><em>02</em>Ask only what needs a human</h4><ul class="bl"><li>Questions, not codes: “Sysco billed 2 avocado cases. Jordan received 1.”</li><li>Each answer shows its money impact.</li></ul><div class="well"><img src="img/s/review-cards.jpg" style="object-position:center" alt="Short delivery card: ordered 2, received 1, billed 2, with Hold $68.40 or Both arrived" loading="lazy"></div></div>
+  <div class="card how"><h4><em>03</em>Show the evidence</h4><ul class="bl"><li>“Exact match · UPC matches”, not “98%”.</li><li>Every flagged line is highlighted on the paper.</li></ul><div class="well"><img src="img/s/evidence.jpg" style="object-position:center" alt="Evidence checklist: three checks pass, one warning, first order from Sysco with no UPC" loading="lazy"></div></div>
  </div>
  <div class="take">Fewer lines to check, more certainty: only the exceptions, each with its proof. See it in the walkthrough below, or try it as Maya.</div>
 </section>
@@ -822,7 +824,7 @@ footer a{color:inherit}
     <div class="r"><b>Captured</b><span>email · EDI · scan · upload</span></div><div class="dn">↓</div>
     <div class="r hl"><span class="pill p-w">Needs you</span><span>only the exceptions</span></div><div class="dn">↓</div>
     <div class="r"><span class="pill p-b">Ready to approve</span><span>checked by Toast IQ</span></div><div class="dn">↓</div>
-    <div class="r"><span class="pill p-g">Approved</span><span>undo until the 2 AM sync</span></div><div class="dn">↓</div>
+    <div class="r"><span class="pill p-g">Approved</span><span>reopen until the 2 AM sync</span></div><div class="dn">↓</div>
     <div class="r"><span class="pill p-g">In QuickBooks</span><span>finished</span></div>
     <div class="foot"><span class="pill p-r">Sync failed</span> is the exception path: approved, but rejected by the books. It’s the bookkeeper’s to fix, not the GM’s.</div>
    </div>
@@ -884,8 +886,8 @@ footer a{color:inherit}
   <div>
    <span class="lbl g">Where it shows up · inside the tasks, not a separate chatbot</span>
    <div class="ch2">
-    <div class="card"><h4>Inbox: a summary with a time estimate</h4><div class="well"><img src="img/c/inbox-169.jpg" alt="Toast IQ summary: 3 invoices need you, about 2 minutes" loading="lazy"></div></div>
-    <div class="card"><h4>Mappings: evidence, not a score</h4><div class="well"><img src="img/c/map-rows.jpg" alt="Mapping rows marked Exact match, Likely and Unsure" loading="lazy"></div></div>
+    <div class="card"><h4>Inbox: a summary with a time estimate</h4><div class="well"><img src="img/s/inbox-169.jpg" alt="Toast IQ summary: 3 invoices need you, about 2 minutes" loading="lazy"></div></div>
+    <div class="card"><h4>Mappings: evidence, not a score</h4><div class="well"><img src="img/s/map-rows.jpg" alt="Mapping rows marked Exact match, Likely and Unsure, each with its reason" loading="lazy"></div></div>
     <div class="card"><h4>Accounting: a suggested fix</h4><div class="well"><img src="img/c/sync-169.jpg" alt="Sync failure with a suggested GL account" loading="lazy"></div></div>
     <div class="card"><h4>Ask Toast IQ: a checklist, not a chatbot</h4><div class="well"><img src="img/c/iq-panel.jpg" alt="Toast IQ panel listing five to-dos before tonight's sync" loading="lazy"></div></div>
    </div>
@@ -907,12 +909,12 @@ footer a{color:inherit}
  <p class="sub">The promise only works if the interface is honest when the paper is messy. It never fakes a green tick.</p>
  <div class="body card qm">
   <div class="ic" aria-hidden="true">≡</div>
-  <div class="t"><b>How many avocado cases came in?</b><span><em>✦</em> Line 14 · “2” written over the printed “1”</span></div>
-  <div class="opt">1 (printed)<small>1 case · $68.40</small></div>
-  <div class="opt">2 (handwritten)<small>2 cases · $136.80</small></div>
+  <div class="t"><b>Sysco billed 2 avocado cases. Jordan received 1.</b><span><img src="img/toast-iq.svg" alt="" width="14" height="14" style="display:inline-block;vertical-align:-2px;margin-right:4px"> Line 14 · ordered 2 · received 1 · billed 2</span></div>
+  <div class="opt">Hold $68.40 · ask for credit<small>Stock keeps 1 case</small></div>
+  <div class="opt">Both arrived · pay for 2<small>Jordan’s count was wrong</small></div>
  </div>
  <div class="wi">
-  <div class="card"><span class="lbl r">What if</span><h4>Handwriting is over the print</h4><p>It asks which number, shows both with their cost, and highlights the line on the paper.</p></div>
+  <div class="card"><span class="lbl r">What if</span><h4>The delivery came up short</h4><p>It lines up ordered, received and billed, keeps stock at what arrived, and holds the difference instead of paying it.</p></div>
   <div class="card"><span class="lbl r">What if</span><h4>The total doesn’t add up</h4><p>It finds the line under the subtotal (a fuel surcharge) and offers to add it as a delivery fee.</p></div>
   <div class="card"><span class="lbl r">What if</span><h4>An item is new</h4><p>Map to an existing item or create one. The mapping is reused on every future invoice.</p></div>
   <div class="card"><span class="lbl r">What if</span><h4>It’s a duplicate</h4><p>Paused so it isn’t paid twice, with a side-by-side compare.</p></div>
@@ -932,29 +934,29 @@ footer a{color:inherit}
    <div class="mini"><div class="av">MR</div><div><h4>Maya Rodriguez</h4><span>General Manager · South End &amp; Back Bay</span></div></div>
    <div class="goal"><div><b>Wants</b>Numbers right, fast</div><div><b>Worries</b>Missing a price rise</div><div><b>Can</b>Review and approve</div></div>
   </div>
-  <div class="scn"><span class="mono">Monday · after close</span><p>“Three suppliers, one handwritten number, and a sync at 2 AM. What actually needs me?”</p><small>Scenario used throughout the prototype · Harbor &amp; Vine, week of Nov 10</small></div>
+  <div class="scn"><span class="mono">Monday · after close</span><p>“Three suppliers, one short delivery, and a sync at 2 AM. What actually needs me?”</p><small>Scenario used throughout the prototype · Harbor &amp; Vine, week of Nov 10</small></div>
  </div>
 
  <div class="step">
   <div><div class="n">01</div><h3>Invoices inbox</h3><div class="q">“What needs me?”</div>
    <div class="qa"><div class="u"><b>Maya sees</b>3 invoices need you · about 2 min</div><div class="a"><b>Toast IQ</b>Names them: Sysco quantity, 2 new wines, avocado price</div></div>
-   <div class="chg"><b>What changed</b>Sorted by urgency. “Approve 8 ready · $10,524” shows the money before the click, then confirms with a 7-second undo.</div>
+   <div class="chg"><b>What changed</b>Sorted by urgency, and the tabs add up to All. “Approve 8 ready · $10,524” lists every bill and says stock won’t change, then asks to confirm. Any bill can be reopened until the 2 AM sync; after that, corrections go through QuickBooks.</div>
    <a class="btn line sm" href="prototype.html#invoices">Open in prototype ↗</a></div>
-  <div class="frame"><img src="img/inbox.jpg" alt="Invoices inbox sorted by what needs the manager" loading="lazy" width="2160" height="1350"></div>
+  <div class="frame"><picture><source media="(max-width:640px)" srcset="img/s/inbox-169.jpg"><img src="img/s/inbox.jpg" alt="Invoices inbox sorted by what needs the manager, with tabs that add up to All" loading="lazy" width="2160" height="1350"></picture></div>
  </div>
  <div class="step">
   <div><div class="n">02</div><h3>Review an invoice</h3><div class="q">“Is this right?”</div>
    <div class="qa"><div class="u"><b>Maya sees</b>3 things need you · 32 of 34 lines confirmed</div><div class="a"><b>Toast IQ</b>Highlights line 14 and line 22 on the paper</div></div>
    <div class="chg"><b>What changed</b>Question first, one reason, money on the answers. “Approve · 3 left” explains why it’s locked.</div>
    <a class="btn line sm" href="prototype.html#review-sysco">Open in prototype ↗</a></div>
-  <div class="frame"><img src="img/review.jpg" alt="Invoice review with the paper invoice on the left and three questions on the right" loading="lazy" width="2160" height="1350"></div>
+  <div class="frame"><picture><source media="(max-width:640px)" srcset="img/s/review-m.jpg"><img src="img/s/review.jpg" alt="Sysco invoice review: the paper shows 2 cases billed with “1 rec’d” written on line 14; the decision card lines up ordered 2, received 1, billed 2" loading="lazy" width="2160" height="1350"></picture></div>
  </div>
  <div class="step">
   <div><div class="n">03</div><h3>Item mappings</h3><div class="q">“Will it be right next time?”</div>
    <div class="qa"><div class="u"><b>Maya sees</b>31 exact matches · Accept all 31</div><div class="a"><b>Toast IQ</b>Chicken breast: 3 of 4 checks pass, first order from Sysco</div></div>
    <div class="chg"><b>What changed</b>Bars, a word and a reason instead of a %. Accept and Change are labelled on every row.</div>
    <a class="btn line sm" href="prototype.html#mappings">Open in prototype ↗</a></div>
-  <div class="frame"><img src="img/mappings.jpg" alt="Item mappings with confidence signals and an evidence panel" loading="lazy" width="2160" height="1350"></div>
+  <div class="frame"><picture><source media="(max-width:640px)" srcset="img/s/map-rows.jpg"><img src="img/s/mappings.jpg" alt="Item mappings marked Exact match, Likely and Unsure in words, with an evidence panel for chicken breast" loading="lazy" width="2160" height="1350"></picture></div>
  </div>
  <div class="step">
   <div><div class="n">04</div><h3>Accounting sync</h3><div class="q">“Did it reach the books?”</div>
@@ -1010,7 +1012,7 @@ footer a{color:inherit}
   <div class="card"><h4>Sync failures</h4><p>Per week, and time to fix. Business: add-on attach and retention.</p></div>
  </div>
  <div class="grid g3" style="margin-top:18px">
-  <div class="card"><span class="mono">WCAG 2.2 AA</span><h4>0 automated issues</h4><p>Audited with axe-core: contrast, names, keyboard, focus, 24px targets, dialogs and reduced motion.</p></div>
+  <div class="card"><span class="mono">Accessibility · partly checked</span><h4>Automated scan clean</h4><p>axe-core reported 0 issues. Not yet done: a screen-reader pass, a keyboard-only walkthrough and 200% zoom, so I don’t claim WCAG conformance.</p></div>
   <div class="card"><span class="mono">Design system</span><h4>Components in Figma</h4><p>Buttons, pills, nav, cards and the Toast IQ orb as variants. In production I’d build on Toast’s own system.</p></div>
   <div class="card"><span class="mono">Responsive</span><h4>Laptop first</h4><p>Review cards restack at 1280px; below 1100px the decisions move above the invoice paper.</p></div>
  </div>
