@@ -36,12 +36,15 @@ a:hover{text-decoration:underline}
 .nv{display:flex;align-items:center;gap:14px;height:44px;padding:0 12px;border-radius:10px;color:var(--ink);font-size:15px;font-weight:500;cursor:pointer;user-select:none;margin-bottom:2px}
 .nv:hover{background:#F5F5F5}
 .nv .chev{margin-left:auto;color:var(--mute)}
-.sub{position:relative;margin:2px 0 6px 26px;padding-left:12px}
-.sub:before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:1px;background:#D9D9D9}
-.si{position:relative;display:flex;align-items:center;height:40px;padding:0 10px 0 12px;margin-left:4px;border-radius:10px;color:#444;font-size:14px;cursor:pointer;margin-bottom:4px}
+.sub{position:relative;margin:2px 0 6px}
+.sub:after{content:"";position:absolute;left:30px;top:0;bottom:19px;width:1px;background:#DDD}
+.si{position:relative;display:flex;align-items:center;gap:10px;height:38px;padding:0 10px 0 46px;border-radius:8px;color:#444;font-size:14px;cursor:pointer;margin-bottom:2px}
+.si:before{content:"";position:absolute;left:30px;top:0;width:14px;height:19px;border-left:1px solid #DDD;border-bottom:1px solid #DDD;border-bottom-left-radius:8px}
+.si:last-child{margin-bottom:0}
+.si .ic{width:16px;height:16px;color:#8C8C8C;flex:none}
 .si:hover{background:#F5F5F5}
 .si.on{background:var(--orange-t);color:var(--orange-tx);font-weight:600}
-.si.on:before{content:"";position:absolute;left:-12px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:var(--orange)}
+.si.on .ic{color:var(--orange-tx)}
 .si .cnt{margin-left:auto;font-size:11px;font-weight:600;background:#EFEFEF;color:#555;border-radius:999px;padding:1px 7px}
 .si.on .cnt{background:var(--orange);color:#fff}
 /* rail */
@@ -715,7 +718,7 @@ function sideHTML(cur){
     if(n.k==='accounting'&&S.role==='rec')continue;
     if(n.sub){const o=S.nav.open[n.k]||n.sub.some(x=>x[0]===r);
       h+=`<div class="nv" onclick="S.nav.open.${n.k}=!S.nav.open.${n.k};save();render()">${I(n.i)}${n.n}<span class="chev">${I(o?'caret-up':'caret-down','s16')}</span></div>`;
-      if(o){h+='<div class="sub">';for(const [k,t] of n.sub){const b=badge(k);h+=`<div class="si ${r===k?'on':''}" onclick="go('#${k}')">${t}${b?`<span class="cnt">${b}</span>`:''}</div>`}h+='</div>'}
+      if(o){h+='<div class="sub">';for(const [k,t,i] of n.sub){const b=badge(k);h+=`<div class="si ${r===k?'on':''}" onclick="go('#${k}')">${I(i,'s16')}<span>${t}</span>${b?`<span class="cnt">${b}</span>`:''}</div>`}h+='</div>'}
     }else h+=`<div class="nv" onclick="go('#${n.k}')">${I(n.i)}${n.n}${n.g?`<span class="chev">${I('caret-down','s16')}</span>`:''}</div>`;
   }
   return h+'</div></div>';
