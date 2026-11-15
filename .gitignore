@@ -1,2 +1,6 @@
 .vercel
 .claude/
+.DS_Store
+node_modules/
+proto/node_modules/
+proto/.cursor/
