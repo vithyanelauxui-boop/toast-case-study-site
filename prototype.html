@@ -37,8 +37,8 @@ a:hover{text-decoration:underline}
 .nv:hover{background:#F5F5F5}
 .nv .chev{margin-left:auto;color:var(--mute)}
 .sub{position:relative;margin:2px 0 6px}
-.sub:after{content:"";position:absolute;left:30px;top:0;bottom:19px;width:1px;background:#DDD}
-.si{position:relative;display:flex;align-items:center;gap:10px;height:38px;padding:0 10px 0 46px;border-radius:8px;color:#444;font-size:14px;cursor:pointer;margin-bottom:2px}
+.sub:after{content:"";position:absolute;left:30px;top:0;bottom:27px;width:1px;background:#DDD}
+.si{position:relative;display:flex;align-items:center;gap:10px;height:38px;padding:0 10px 0 50px;border-radius:8px;color:#444;font-size:14px;cursor:pointer;margin-bottom:2px}
 .si:before{content:"";position:absolute;left:30px;top:0;width:14px;height:19px;border-left:1px solid #DDD;border-bottom:1px solid #DDD;border-bottom-left-radius:8px}
 .si:last-child{margin-bottom:0}
 .si .ic{width:16px;height:16px;color:#8C8C8C;flex:none}
@@ -133,7 +133,6 @@ a:hover{text-decoration:underline}
 .askbtn:hover{background:linear-gradient(#F7F3FF,#F7F3FF) padding-box,linear-gradient(90deg,#A9B5F7,#C9B0F5,#F2B3D2) border-box}
 .srclink{display:inline-flex;align-items:center;gap:6px}
 .srclink .ic{width:14px;height:14px;color:var(--blue)}
-.srclink .dot{width:6px;height:6px;border-radius:50%;background:#2E9E5B;flex:none}
 .pager{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
 .drop{border:1.5px dashed #C9C9C9;border-radius:12px;background:#FAFAFA;padding:34px 20px;text-align:center;transition:.15s}
 .drop.over{border-color:var(--blue);background:var(--blue-t)}
@@ -782,7 +781,7 @@ function pageInvoices(){
   UI.page=Math.min(Math.max(UI.page||1,1),pages);
   const from=(UI.page-1)*PAGE_SIZE;
   const pageRows=rows.slice(from,from+PAGE_SIZE);
-  return `<div class="ph"><div><h1>Invoices</h1><div class="subt">${S.loc} · week of Nov 10 · <a class="srclink" onclick="openSources()" title="Suppliers sending invoices to Toast automatically"><span class="dot"></span>${I('plugs-connected','s14')}Invoice sources · 5 connected</a></div></div><div class="acts"><button class="btn p" onclick="openUpload()">${I('upload-simple','s16')}Upload invoices</button></div></div>
+  return `<div class="ph"><div><h1>Invoices</h1><div class="subt">${S.loc} · week of Nov 10 · <a class="srclink" onclick="openSources()" title="Suppliers sending invoices to Toast automatically">${I('plugs-connected','s14')}Invoice sources · 5 connected</a></div></div><div class="acts"><button class="btn p" onclick="openUpload()">${I('upload-simple','s16')}Upload invoices</button></div></div>
   ${iqBanner()}
   <div class="card"><div class="tbar"><div class="seg" role="tablist">${[['all','All',S.invoices.length,''],['needs','Needs you',c.needs,'needs'],['ready','Ready',c.ready,'ready'],['sync','Sync failed',c.sync,'err']].map(t=>`<button role="tab" aria-selected="${S.tab===t[0]}" class="sg ${S.tab===t[0]?'on':''}" onclick="S.tab='${t[0]}';UI.page=1;save();render()">${t[3]?`<i class="sd ${t[3]}"></i>`:''}${t[1]}<b class="${t[3]}">${t[2]}</b></button>`).join('')}</div>
   <div class="sp"></div>${c.ready&&isGM()?`<button class="btn s" onclick="openBulk()">Approve ${c.ready} ready · ${money(rt).replace(/\.\d\d$/,'')}</button>`:''}
