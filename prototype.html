@@ -52,6 +52,13 @@ a:hover{text-decoration:underline}
 .rbi:hover{background:#F3F3F3}
 .rbi.on{background:var(--orange-t);color:var(--orange-tx)}
 .rbi .dot{position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--orange);border:1.5px solid #fff}
+.rbi .gdot{position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:#2E9E5B;border:1.5px solid #fff}
+.navstat{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--line);cursor:pointer}
+.navstat:hover{background:#F5F5F5}
+.navstat .nsdot{width:6px;height:6px;border-radius:50%;background:#2E9E5B;flex:none}
+.navstat .nst{display:flex;flex-direction:column;line-height:1.3;min-width:0}
+.navstat .nst b{font-size:12.5px;font-weight:600;color:var(--ink)}
+.navstat .nst span{font-size:11.5px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rdiv{width:28px;height:1px;background:var(--line);margin:6px 0}
 .main{flex:1;display:flex;flex-direction:column;min-width:0}
 .top{height:56px;flex:none;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 20px;gap:16px}
@@ -115,12 +122,16 @@ a:hover{text-decoration:underline}
 .iqchip{border:1px solid var(--ai-b);background:#fff;border-radius:999px;height:28px;padding:0 12px;font-size:13px;color:#444;display:inline-flex;align-items:center;gap:6px}
 .iqchip b{font-weight:600;color:var(--ink)}
 .iqchip:hover{border-color:#C4B0F5;background:#FDFCFF}
+.iqchip .ic{color:var(--warn-tx)}
 .iq2 .note{display:flex;align-items:center;gap:10px;padding:10px 18px;border-top:1px solid var(--ai-b);background:rgba(255,255,255,.55);font-size:13.5px;color:#333}
 .iq2 .note .lab{font-weight:600;color:#333;white-space:nowrap}
 .iq2 .note a{margin-left:auto;white-space:nowrap;font-size:13px}
 .askbtn{white-space:nowrap;flex:none;display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 8px;border-radius:999px;border:1px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(90deg,#A9B5F7,#C9B0F5,#F2B3D2) border-box;color:var(--ai);font-weight:600;font-size:13.5px}
 .askbtn:hover{background:linear-gradient(#F7F3FF,#F7F3FF) padding-box,linear-gradient(90deg,#A9B5F7,#C9B0F5,#F2B3D2) border-box}
-.srcbtn .dot{width:7px;height:7px;border-radius:50%;background:#2E9E5B}
+.srclink{display:inline-flex;align-items:center;gap:6px}
+.srclink .ic{width:14px;height:14px;color:var(--blue)}
+.srclink .dot{width:6px;height:6px;border-radius:50%;background:#2E9E5B;flex:none}
+.pager{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
 .drop{border:1.5px dashed #C9C9C9;border-radius:12px;background:#FAFAFA;padding:34px 20px;text-align:center;transition:.15s}
 .drop.over{border-color:var(--blue);background:var(--blue-t)}
 .drop .cic{width:52px;height:52px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;color:var(--blue)}
@@ -605,6 +616,7 @@ const I=(n,c='')=>`<svg class="ic ${c}" viewBox="0 0 256 256">${ICONS[n]||''}</s
 const $=s=>document.querySelector(s);
 const money=n=>(n<0?'−':'')+'$'+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const animPhase=ms=>`animation-delay:${-(Date.now()%ms)}ms`;
 
 /* ---------------- data ---------------- */
 const SRC={Email:'envelope-simple',Scan:'camera',EDI:'lightning',Upload:'upload-simple'};
@@ -660,11 +672,11 @@ function load(){try{const x=JSON.parse(localStorage.getItem('toastproto:v4'));if
 function save(){try{localStorage.setItem('toastproto:v4',JSON.stringify(S))}catch(e){}}
 const ROLES={gm:{name:'Maya Rodriguez',ini:'MR',title:'General Manager',locs:'South End & Back Bay',can:['Review and approve invoices','Create and map items','See accounting sync']},rec:{name:'Jordan Lee',ini:'JL',title:'Receiver',locs:'South End',can:['Scan and upload invoices','Answer quantity questions','Can’t approve bills or see accounting']},bk:{name:'Priya Shah',ini:'PS',title:'Bookkeeper',locs:'All locations',can:['Fix accounting sync and GL accounts','View invoices','Can’t approve bills']}};
 const role=()=>ROLES[S.role||'gm'];const isGM=()=>(S.role||'gm')==='gm';
-const UI0={};const UI={fly:null,modal:null,drawer:null,locOpen:false,proto:false,ask:false,askLog:[],pop:null,upload:null};
+const UI0={};const UI={fly:null,modal:null,drawer:null,locOpen:false,proto:false,ask:false,askLog:[],pop:null,upload:null,page:1};
 
 /* ---------------- router ---------------- */
 function route(){const h=(location.hash||'#invoices').slice(1)||'invoices';if(h.startsWith('review-'))return ['review',h.slice(7)];return [h]}
-window.addEventListener('hashchange',()=>{UI.pop=null;S.nav.open={};save();render();$('.content')&&($('.content').scrollTop=0)});
+window.addEventListener('hashchange',()=>{UI.pop=null;UI.page=1;S.nav.open={};save();render();$('.content')&&($('.content').scrollTop=0)});
 function go(h){location.hash=h}
 
 /* ---------------- helpers ---------------- */
@@ -686,15 +698,19 @@ const NAV=[
 function badge(k){const c=counts();if(k==='invoices')return c.needs+c.ready;if(k==='mappings')return S.maps.accepted?15:46;if(k==='accounting'){const n=(!S.acct.rdFixed)+(!S.acct.cmFixed);return n||null}return null}
 function sideHTML(cur){
   let r=route()[0];if(r==='review')r='invoices';
+  const conn=S.role==='rec'?{ic:'plugs-connected',k:'Invoice sources',v:'5 connected',go:'#invoices'}:{ic:'cloud-check',k:'QuickBooks',v:'Connected · synced '+S.acct.lastSync,go:'#accounting'};
   if(S.nav.rail){
-    let h=`<div class="side rail ${UI.anim||''}"><button class="brand rbtn" aria-label="Expand menu" onclick="toggleRail()"><span class="lg">${I('bread','s24').replace('class="ic','style="color:#fff" class="ic')}</span><span class="ex">${I('sidebar-simple','s20')}</span><span class="ktip">Expand menu <kbd>⌘</kbd><kbd>B</kbd></span></button><div class="rb">`;
+    let h=`<div class="side rail ${UI.anim||''}"><button class="brand rbtn" aria-label="Expand menu" onclick="toggleRail()"><span class="lg">${I('bread','s24').replace('class="ic','style="color:#fff" class="ic')}</span><span class="ex">${I('sidebar-simple','s20')}</span><span class="ktip">Expand menu <kbd>⌘</kbd><kbd>B</kbd></span></button><div class="rb">
+    <div class="rgrp"><div class="rbi" aria-label="${conn.k}, ${conn.v}" onclick="go('${conn.go}')">${I(conn.ic)}<span class="gdot"></span></div><div class="fly tip">${conn.k} · ${conn.v}</div></div>`;
     for(const n of NAV){if(n.k==='accounting'&&S.role==='rec')continue;
       const act=n.sub?n.sub.some(x=>x[0]===r):r===n.k;const dot=n.sub&&n.sub.some(x=>badge(x[0]));
       if(n.sub){h+=`<div class="rgrp"><div class="rbi ${act?'on':''}" tabindex="0" aria-label="${n.n}" aria-haspopup="menu">${I(n.i)}${dot?'<span class="dot"></span>':''}</div>
         ${`<div class="fly"><div class="flh">${n.n}</div>${n.sub.filter(x=>!(x[0]==='accounting'&&S.role==='rec')).map(([k,t,i])=>{const bd=badge(k);return `<div class="fli ${r===k?'on':''}" onclick="go('#${k}')">${I(i,'s16')}<span>${t}</span>${bd?`<b>${bd}</b>`:''}</div>`}).join('')}</div>`}</div>`}
       else h+=`<div class="rgrp"><div class="rbi ${act?'on':''}" aria-label="${n.n}" onclick="go('#${n.k}')">${I(n.i)}</div><div class="fly tip">${n.n}</div></div>`}
     h+=`</div></div>`;return h}
-  let h=`<div class="side ${UI.anim||''}"><div class="brand"><img src="${LOGO}" alt="toast"><button class="iconbtn ktw" aria-label="Collapse menu" onclick="toggleRail()">${I('sidebar-simple')}<span class="ktip">Collapse menu <kbd>⌘</kbd><kbd>B</kbd></span></button></div><div class="nav">`;
+  let h=`<div class="side ${UI.anim||''}"><div class="brand"><img src="${LOGO}" alt="toast"><button class="iconbtn ktw" aria-label="Collapse menu" onclick="toggleRail()">${I('sidebar-simple')}<span class="ktip">Collapse menu <kbd>⌘</kbd><kbd>B</kbd></span></button></div>
+  <div class="navstat" onclick="go('${conn.go}')" title="${conn.k} · ${conn.v}"><span class="nsdot"></span>${I(conn.ic,'s16')}<div class="nst"><b>${conn.k}</b><span>${conn.v}</span></div></div>
+  <div class="nav">`;
   for(const n of NAV){
     if(n.k==='accounting'&&S.role==='rec')continue;
     if(n.sub){const o=S.nav.open[n.k]||n.sub.some(x=>x[0]===r);
@@ -713,7 +729,7 @@ function topHTML(){
   const av=k=>`<span class="lav">${I(LI[k][0],'s16')}</span>`;
   return `<div class="top"><div class="loc"><button class="locbtn" aria-haspopup="listbox" aria-expanded="${!!UI.locOpen}" onclick="event.stopPropagation();UI.locOpen=!UI.locOpen;render()">${av(S.loc)}<span class="lt"><small>Harbor & Vine</small><b>${S.loc}</b></span><span class="sr">, ${LI[S.loc][1]}, switch location</span>${I('caret-down','s14 lcv')}</button>
   ${UI.locOpen?`<div class="menu lmenu" role="listbox" onclick="event.stopPropagation()"><div class="lmh">Switch location</div>${['South End','Back Bay','Seaport'].map(k=>`<div class="lmi ${k===S.loc?'on':''}" role="option" aria-selected="${k===S.loc}" onclick="setLoc('${k}')">${av(k)}<div><b>${k}</b><span><em>${LI[k][1]}</em> · ${LI[k][2]}</span></div>${k===S.loc?I('check','s16 lck'):''}</div>`).join('')}<div class="lmd"></div><div class="lmi ${S.loc==='All locations'?'on':''}" role="option" aria-selected="${S.loc==='All locations'}" onclick="setLoc('All locations')">${av('All locations')}<div><b>All locations</b><span>Combined view of 3 locations</span></div>${S.loc==='All locations'?I('check','s16 lck'):''}</div></div>`:''}</div>
-  <div class="search">${I('magnifying-glass','s16')}<input placeholder="Search items, invoices, suppliers" onkeydown="if(event.key==='Enter'){S.q=this.value;S.tab='all';save();go('#invoices');render()}"></div>
+  <div class="search">${I('magnifying-glass','s16')}<input placeholder="Search items, invoices, suppliers" onkeydown="if(event.key==='Enter'){S.q=this.value;S.tab='all';UI.page=1;save();go('#invoices');render()}"></div>
   <button class="askbtn" onclick="openAsk()"><span class="orb sm"></span>Ask Toast IQ</button><button class="iconbtn" aria-label="Help" title="Help">${I('question')}</button><button class="iconbtn" aria-label="Notifications" title="Notifications">${I('bell')}</button><div class="loc"><button class="avatar" aria-label="MR, account menu" style="border:0" title="${role().name} · ${role().title}" onclick="event.stopPropagation();UI.me=!UI.me;render()">${role().ini}</button>${UI.me?`<div class="menu me" onclick="event.stopPropagation()"><div class="meh"><div class="avatar">${role().ini}</div><div><b>${role().name}</b><span>${role().title} · Harbor & Vine</span></div></div><div class="mel">Access · ${role().locs}</div>${role().can.map(c=>`<div class="mea">${I(c.startsWith('Can’t')?'x':'check','s14')}${c}</div>`).join('')}<div class="mi" onclick="UI.me=false;toast('Signed out','Prototype only.')">Sign out</div></div>`:''}</div></div>`}
 function setLoc(l){S.loc=l;UI.locOpen=false;save();render();if(l!=='South End')toast(`Showing ${l}`,'This prototype’s data is South End; the view switches in the real product.')}
 
@@ -726,11 +742,13 @@ function iqBanner(){
   if(!c.needs)return `<div class="iq2"><div class="im"><div style="flex:1"><div class="eb">${I('sparkle:f','s14 sp')}Toast IQ</div><div class="t">You’re all caught up</div><div style="color:#555;margin-top:4px">${c.ready?`${c.ready} invoices are ready to approve. Nothing needs a decision.`:'Every invoice this week is approved. Bills sync to QuickBooks tonight at 2 AM.'}</div></div></div></div>`;
   const needs=S.invoices.filter(isNeeds);
   const why={sysco:'handwritten quantity',sg:'2 new wines',baldor:'avocado price'};
+  const whyIcon={sysco:'pencil-simple',sg:'tag',baldor:'trend-up'};
+  const needIcon=n=>whyIcon[n.id]||(n.issues&&n.issues.length?(n.issues.every(i=>i.k==='new')?'tag':n.issues.some(i=>i.k==='price')?'trend-up':n.issues.some(i=>i.k==='qty')?'pencil-simple':'warning'):n.due&&!n.dueOk?'clock':'warning');
   const shortN=n=>n.sup.replace(' Boston','').replace(' Specialty Foods','');
   const bal=inv('baldor');
   return `<div class="iq2"><div class="im"><div style="flex:1"><div class="eb">${I('sparkle:f','s14 sp')}Toast IQ</div>
   <div class="t">${needs.length} invoice${needs.length>1?'s':''} need${needs.length>1?'':'s'} you · about ${needs.length<3?1:2} min</div>
-  <div class="iqchips">${needs.map(n=>`<button class="iqchip" onclick="go('#review-${n.id}')"><b>${shortN(n)}</b>${why[n.id]||n.what}</button>`).join('')}</div></div>
+  <div class="iqchips">${needs.map(n=>`<button class="iqchip" onclick="go('#review-${n.id}')">${I(needIcon(n),'s14')}<b>${shortN(n)}</b>${why[n.id]||n.what}</button>`).join('')}</div></div>
   <button class="btn p" onclick="go('#review-${needs[0].id}')">Start review</button></div>
   ${isNeeds(bal)?`<div class="note">${I('trend-up','s16').replace('class','style="color:#666" class')}<span class="lab">Worth knowing</span><span>Avocado is up 18% ($58.00 → $68.40 a case). Avocado toast margin drops from 71% to 66%.</span><a onclick="go('#mappings')">See avocado cost ${I('arrow-right','s14')}</a></div>`:''}</div>`;
 }
@@ -745,6 +763,8 @@ function rowHTML(x){
   return `<tr class="click" onclick="go('${href}')"><td><div class="supc"><div class="srcic">${I(SRC[x.src],'s16')}</div><div><div class="supn">${x.sup}</div><div class="supm">${x.num} · ${x.date} · ${x.src}</div></div></div></td>
   <td class="amt">${money(x.total)}</td><td>${w}</td><td><span class="pill ${st[0]}">${st[1]}</span></td><td style="width:40px;color:#888">${I('caret-right','s16')}</td></tr>`;
 }
+const PAGE_SIZE=10;
+const rankRow=x=>isNeeds(x)?0:x.status==='syncfail'?1:isReady(x)?2:x.status==='approved'?3:4;
 function pageInvoices(){
   if(S.firstTime)return pageEmpty();
   const c=counts();let rows=S.invoices;
@@ -753,32 +773,31 @@ function pageInvoices(){
   if(S.tab==='sync')rows=rows.filter(x=>x.status==='syncfail');
   if(S.q){const q=S.q.toLowerCase();rows=rows.filter(x=>(x.sup+x.num).toLowerCase().includes(q))}
   if(S.fSrc)rows=rows.filter(x=>x.src===S.fSrc);
-  const hidden=0;
+  rows=[...rows].sort((a,b)=>rankRow(a)-rankRow(b));
   const rt=readyTotal();
-  return `<div class="ph"><div><h1>Invoices</h1><div class="subt">${S.loc} · week of Nov 10</div></div><div class="acts"><button class="btn s srcbtn" onclick="openSources()" title="Suppliers sending invoices to Toast automatically">${I('plugs-connected:b','s16')}Invoice sources<span class="dot"></span><span style="font-weight:500;color:#555">5 connected</span></button><button class="btn p" onclick="openUpload()">${I('upload-simple:b','s16')}Upload invoices</button></div></div>
+  const pages=Math.max(1,Math.ceil(rows.length/PAGE_SIZE));
+  UI.page=Math.min(Math.max(UI.page||1,1),pages);
+  const from=(UI.page-1)*PAGE_SIZE;
+  const pageRows=rows.slice(from,from+PAGE_SIZE);
+  return `<div class="ph"><div><h1>Invoices</h1><div class="subt">${S.loc} · week of Nov 10 · <a class="srclink" onclick="openSources()" title="Suppliers sending invoices to Toast automatically"><span class="dot"></span>${I('plugs-connected','s14')}Invoice sources · 5 connected</a></div></div><div class="acts"><button class="btn p" onclick="openUpload()">${I('upload-simple','s16')}Upload invoices</button></div></div>
   ${iqBanner()}
-  <div class="card"><div class="tbar"><div class="seg" role="tablist">${[['all','All',S.invoices.length,''],['needs','Needs you',c.needs,'needs'],['ready','Ready',c.ready,'ready'],['sync','Sync failed',c.sync,'err']].map(t=>`<button role="tab" aria-selected="${S.tab===t[0]}" class="sg ${S.tab===t[0]?'on':''}" onclick="S.tab='${t[0]}';save();render()">${t[3]?`<i class="sd ${t[3]}"></i>`:''}${t[1]}<b class="${t[3]}">${t[2]}</b></button>`).join('')}</div>
+  <div class="card"><div class="tbar"><div class="seg" role="tablist">${[['all','All',S.invoices.length,''],['needs','Needs you',c.needs,'needs'],['ready','Ready',c.ready,'ready'],['sync','Sync failed',c.sync,'err']].map(t=>`<button role="tab" aria-selected="${S.tab===t[0]}" class="sg ${S.tab===t[0]?'on':''}" onclick="S.tab='${t[0]}';UI.page=1;save();render()">${t[3]?`<i class="sd ${t[3]}"></i>`:''}${t[1]}<b class="${t[3]}">${t[2]}</b></button>`).join('')}</div>
   <div class="sp"></div>${c.ready&&isGM()?`<button class="btn s" onclick="openBulk()">Approve ${c.ready} ready · ${money(rt).replace(/\.\d\d$/,'')}</button>`:''}
-  <div class="tsearch">${I('magnifying-glass','s16')}<input id="tq" placeholder="Search supplier or invoice #" value="${esc(S.q)}" oninput="S.q=this.value;save();render();const e=$('#tq');e.focus();e.setSelectionRange(e.value.length,e.value.length)"></div></div>
-  <div class="fbar">${fchip('src','Source',S.fSrc,['Email','EDI','Scan','Upload'])}${fchip('date','Date','This week',['This week','Last week','Last 30 days','Custom range'])}${S.fSrc?`<a onclick="S.fSrc=null;save();render()">Clear filters</a>`:''}<span class="fcount">Sorted by what needs you first · ${rows.length} invoice${rows.length===1?'':'s'}</span></div>
+  <div class="tsearch">${I('magnifying-glass','s16')}<input id="tq" placeholder="Search supplier or invoice #" value="${esc(S.q)}" oninput="S.q=this.value;UI.page=1;save();render();const e=$('#tq');e.focus();e.setSelectionRange(e.value.length,e.value.length)"></div></div>
+  <div class="fbar">${fchip('src','Source',S.fSrc,['Email','EDI','Scan','Upload'])}${fchip('date','Date','This week',['This week','Last week','Last 30 days','Custom range'])}${S.fSrc?`<a onclick="S.fSrc=null;UI.page=1;save();render()">Clear filters</a>`:''}<span class="fcount">Sorted by what needs you first · ${rows.length} invoice${rows.length===1?'':'s'}</span></div>
   <table><thead><tr><th>Supplier</th><th style="width:126px">Total</th><th style="width:316px">What needs you</th><th style="width:200px">Status</th><th style="width:40px"></th></tr></thead><tbody>
-  ${rows.length?groupRows(rows):`<tr><td colspan="5" style="padding:40px 16px">${S.q?emptyHTML('magnifying-glass',`No invoices match “${esc(S.q)}”`,'Try a supplier name or an invoice number.',`<button class="btn s" onclick="S.q='';save();render()">Clear search</button>`):S.tab==='needs'?emptyHTML('check-circle','You’re all caught up','Nothing needs a decision. New invoices land here as they arrive.',''):S.tab==='sync'?emptyHTML('cloud-check','No sync issues','Every approved bill made it into QuickBooks.',''):emptyHTML('receipt','Nothing here yet','Invoices show up here once they’re read.','')}</td></tr>`}
-  ${S.tab==='all'&&!S.q&&!S.fSrc?`<tr class="more"><td colspan="5"><div style="display:flex;align-items:center;gap:8px">${I('clock-counter-clockwise','s14')}${c.all-S.invoices.length} older invoices are already in QuickBooks.<a style="margin-left:auto" onclick="toast('Invoice history','Searchable archive by supplier, date and amount. (Not part of this prototype.)')">View history ${I('arrow-right','s14')}</a></div></td></tr>`:''}
-  ${false?`<tr class="more"><td colspan="5">Showing ${rows.length} of ${c.all} · ${hidden} more from this week and ${c.all-S.invoices.length} older invoices already in QuickBooks. <a onclick="S.showAll=true;save();render()">Show ${hidden} more</a></td></tr>`:''}
-  </tbody></table></div>`;
+  ${pageRows.length?pageRows.map(rowHTML).join(''):`<tr><td colspan="5" style="padding:40px 16px">${S.q?emptyHTML('magnifying-glass',`No invoices match “${esc(S.q)}”`,'Try a supplier name or an invoice number.',`<button class="btn s" onclick="S.q='';UI.page=1;save();render()">Clear search</button>`):S.tab==='needs'?emptyHTML('check-circle','You’re all caught up','Nothing needs a decision. New invoices land here as they arrive.',''):S.tab==='sync'?emptyHTML('cloud-check','No sync issues','Every approved bill made it into QuickBooks.',''):emptyHTML('receipt','Nothing here yet','Invoices show up here once they’re read.','')}</td></tr>`}
+  ${S.tab==='all'&&!S.q&&!S.fSrc&&UI.page===pages?`<tr class="more"><td colspan="5"><div style="display:flex;align-items:center;gap:8px">${I('clock-counter-clockwise','s14')}${c.all-S.invoices.length} older invoices are already in QuickBooks.<a style="margin-left:auto" onclick="toast('Invoice history','Searchable archive by supplier, date and amount. (Not part of this prototype.)')">View history ${I('arrow-right','s14')}</a></div></td></tr>`:''}
+  </tbody></table>
+  ${rows.length>PAGE_SIZE?`<div class="pager"><span>Showing ${from+1}–${Math.min(from+PAGE_SIZE,rows.length)} of ${rows.length} invoice${rows.length===1?'':'s'}</span><div class="qn"><span>Page ${UI.page} of ${pages}</span><button class="iconbtn qb" aria-label="Previous page" ${UI.page<=1?'disabled':''} onclick="UI.page--;render();$('.content')&&($('.content').scrollTop=0)">${I('caret-left','s16')}</button><button class="iconbtn qb" aria-label="Next page" ${UI.page>=pages?'disabled':''} onclick="UI.page++;render();$('.content')&&($('.content').scrollTop=0)">${I('caret-right','s16')}</button></div></div>`:''}
+  </div>`;
 }
-function fchip(k,label,val,opts){const open=UI.fopen===k;return `<div class="fc ${val&&k!=='date'?'on':''}"><button class="fcb" aria-haspopup="listbox" aria-expanded="${open}" onclick="event.stopPropagation();UI.fopen=${open?'null':`'${k}'`};render()">${label}${val?`: <b>${val}</b>`:''}${I('caret-down','s14')}</button>${open?`<div class="menu fm" onclick="event.stopPropagation()">${opts.map(o=>`<div class="mi" onclick="UI.fopen=null;${k==='src'?`S.fSrc='${o}'`:`toast('Date range','Only this week is in the prototype data.')`};save();render()">${o===val?I('check','s14'):'<span style="width:14px"></span>'}${o}</div>`).join('')}</div>`:''}</div>`}
-function groupRows(rows){const rank=x=>isNeeds(x)?0:x.status==='syncfail'?1:isReady(x)?2:x.status==='approved'?3:4;return [...rows].sort((a,b)=>rank(a)-rank(b)).map(rowHTML).join('');
-  const G=[['Needs you',rows.filter(isNeeds),true,'warning','Decisions only you can make'],['Sync failed',rows.filter(x=>x.status==='syncfail'),true,'warning-circle','Approved, but QuickBooks rejected it'],['Ready to approve',rows.filter(x=>!isNeeds(x)&&isReady(x)),true,'check-circle','Checked by Toast IQ, waiting for your OK'],['Approved',rows.filter(x=>x.status==='approved'),true,'clock-countdown','Goes to QuickBooks tonight at 2 AM · undo until then'],['In QuickBooks',rows.filter(x=>x.status==='synced'),false,'cloud-check','Finished. Nothing left to do']];
-  UI.gopen=UI.gopen||{};
-  return G.map(([n,r,def,ic,hint])=>{const k=n;const open=UI.gopen[k]??def;const tot=r.reduce((a,b)=>a+b.total,0);
-    const shown=open?(r.length>6&&!UI.gall?.[k]?r.slice(0,5):r):[];
-    return `<tr class="gh" onclick="UI.gopen['${k}']=${!open};render()"><td colspan="5"><div class="ghd">${I(open?'caret-down':'caret-right','s14')}<span class="ghi g-${ic}">${I(ic,'s14')}</span><b>${n}</b><span>${r.length?`${r.length} · ${money(tot)}`:'none'}</span><em>${hint}</em></div></td></tr>${shown.map(rowHTML).join('')}${open&&r.length>shown.length?`<tr class="more"><td colspan="5"><a onclick="UI.gall=UI.gall||{};UI.gall['${k}']=true;render()">Show ${r.length-shown.length} more</a></td></tr>`:''}`}).join('')}
+function fchip(k,label,val,opts){const open=UI.fopen===k;return `<div class="fc ${val&&k!=='date'?'on':''}"><button class="fcb" aria-haspopup="listbox" aria-expanded="${open}" onclick="event.stopPropagation();UI.fopen=${open?'null':`'${k}'`};render()">${label}${val?`: <b>${val}</b>`:''}${I('caret-down','s14')}</button>${open?`<div class="menu fm" onclick="event.stopPropagation()">${opts.map(o=>`<div class="mi" onclick="UI.fopen=null;${k==='src'?`S.fSrc='${o}'`:`toast('Date range','Only this week is in the prototype data.')`};UI.page=1;save();render()">${o===val?I('check','s14'):'<span style="width:14px"></span>'}${o}</div>`).join('')}</div>`:''}</div>`}
 function pageEmpty(){
-  return `<div class="ph"><div><h1>Invoices</h1><div class="subt">${S.loc}</div></div><div class="acts"><button class="btn s" onclick="openUpload(true)">${I('upload-simple:b','s16')}Upload invoices</button></div></div>
+  return `<div class="ph"><div><h1>Invoices</h1><div class="subt">${S.loc}</div></div><div class="acts"><button class="btn s" onclick="openUpload(true)">${I('upload-simple','s16')}Upload invoices</button></div></div>
   <div class="empty"><div class="mi">${I('envelope-simple','s24')}</div><h2>Get your first invoice into Toast</h2>
   <p>Forward supplier emails to your Toast address. We read each bill, update item costs and stock, and you only step in when something looks off.</p>
-  <div class="copyrow"><input class="inp" readonly value="southend.harborvine@invoices.toasttab.com"><button class="btn p" onclick="try{navigator.clipboard.writeText('southend.harborvine@invoices.toasttab.com').catch(()=>{})}catch(e){};toast('Address copied','Paste it into your supplier’s billing contact.')">${I('copy:b','s16')}Copy</button></div>
+  <div class="copyrow"><input class="inp" readonly value="southend.harborvine@invoices.toasttab.com"><button class="btn p" onclick="try{navigator.clipboard.writeText('southend.harborvine@invoices.toasttab.com').catch(()=>{})}catch(e){};toast('Address copied','Paste it into your supplier’s billing contact.')">${I('copy','s16')}Copy</button></div>
   <div style="display:flex;gap:10px;align-items:center;margin-top:16px;color:#444;font-size:13px">${I('sparkle:f','s16 sp')}Most locations forward from Sysco, US Foods and their beer and wine distributors first. <a style="white-space:nowrap" onclick="toast('Draft email ready','We wrote a note to your 4 suppliers with your Toast address.')">Email my suppliers</a></div>
   <div class="or">or add invoices another way</div>
   <div class="ways">
@@ -952,7 +971,7 @@ function uploadHTML(){const u=UI.upload;const F=u.files;
     if(f.st==='dup')return `<div class="ur">${tile('copy','warn')}<div class="ub"><div class="nm">${f.n}</div><div class="ds">Looks like a bill already in QuickBooks · paused so it isn’t paid twice</div>
      ${u.cmp?`<div class="cmpb"><div><small>This upload</small><b>#4471902 · Nov 11</b><span>$1,905.33 · 28 lines</span></div><div><small>In QuickBooks</small><b>#4471902 · Nov 11 · EDI</b><span>$1,905.33 · synced Nov 12</span></div></div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn p sm" onclick="UI.upload.cmp=false;UI.upload.files=UI.upload.files.filter(x=>x.st!=='dup');toast('Duplicate removed','Nothing was added.');render()">Remove duplicate</button><button class="btn g sm" onclick="UI.upload.cmp=false;render()">Keep both</button></div>`:''}</div>${u.cmp?'':`<button class="btn s sm" onclick="UI.upload.cmp=true;render()">Compare</button>`}</div>`;
     if(f.st==='up')return `<div class="ur">${tile('file-text','')}<div class="ub"><div class="nm">${esc(f.n)}</div><div class="ds">Uploading · ${f.p}%</div><div class="prog2"><i style="width:${f.p}%"></i></div></div></div>`;
-    if(f.st==='read')return `<div class="ur">${`<span class="ft scan">${I('file-text','s16')}<i></i></span>`}<div class="ub"><div class="nm">${esc(f.n)}</div><div class="ds shim">${I('sparkle:f','s14 sp')}Toast IQ is reading · ${Math.round(f.lines*f.p/100)} lines found</div></div></div>`;
+    if(f.st==='read')return `<div class="ur">${`<span class="ft scan">${I('file-text','s16')}<i style="${animPhase(1300)}"></i></span>`}<div class="ub"><div class="nm">${esc(f.n)}</div><div class="ds shim" style="${animPhase(1800)}">${I('sparkle:f','s14 sp')}Toast IQ is reading · ${Math.round(f.lines*f.p/100)} lines found</div></div></div>`;
     const sup=f.rv?{sysco:'Sysco Boston',sg:'Southern Glazer’s',baldor:'Baldor'}[f.rv]:null;const needsYou=f.rv&&/need|set up/.test(f.msg);
     return `<div class="ur">${tile('check','ok')}<div class="ub"><div class="nm">${esc(f.n)}</div><div class="ds">${sup?`${sup} · ${f.lines} lines`:f.msg}</div></div>${needsYou?`<span class="pill needs">${f.msg.split(' · ').pop()}</span>`:f.rv?'<span class="pill ready">Ready</span>':`<a style="align-self:center;font-size:13px" onclick="toast('2 invoices created','Hood Dairy #H-77310 and Coca-Cola #0045519873')">See 2 invoices</a>`}</div>`};
   const needs=F.filter(f=>f.st==='bad'||f.st==='dup'),prog=F.filter(f=>f.st==='up'||f.st==='read'),done=F.filter(f=>f.st==='done');
@@ -1002,10 +1021,10 @@ function pageMappings(){const M=S.maps;let rows=M.rows.filter(r=>!M.done[r.id]);
       conf:[['1022180 · EGGS LG 15DZ','Sysco','Two items at Back Bay: “Eggs, large” and “Eggs, brown”'],['4471-220 · BUTTER UNSLT 36/1#','US Foods','Pack size changed: 36/1# → 30/1#']],
       map:[['1004421 · MILK WHL GAL 4/1','Sysco','Whole milk, gallon','1 CS = 4 gal','Nov 13'],['49000-02890 · COKE 20OZ 24PK','Coca-Cola Bev. NE','Coca-Cola 20 oz','1 CS = 24 ea','Nov 12'],['1883421 · AVOCADO HASS 48CT','Sysco','Avocado, Hass','1 CS = 48 ea','Nov 13'],['1660231 · BUTTER UNSLT 36/1#','Sysco','Butter, unsalted','1 CS = 36 lb','Nov 13']]}[M.tab];
     if(M.tab==='map'){body=`<table class="mt"><thead><tr><th>Supplier item</th><th>Your item</th><th>Converts as</th><th>Last on an invoice</th><th style="width:56px"></th></tr></thead><tbody>${data.map(d=>`<tr class="click" onclick="toast('Edit mapping','Opens the same side panel as Suggested.')"><td><div class="supn mono">${d[0].split(' · ')[1]}</div><div class="supm">${d[1]} · #${d[0].split(' · ')[0]}</div></td><td><div class="supn" style="font-weight:500">${d[2]}</div></td><td style="color:#555">${d[3]}</td><td style="color:#555">${d[4]}</td><td><button class="ibtn" aria-label="Edit mapping" data-tip="Edit mapping" onclick="event.stopPropagation();toast('Edit mapping','Opens the same side panel as Suggested.')">${I('pencil-simple','s16')}</button></td></tr>`).join('')}</tbody></table>`}else
-    body=`<table class="mt"><thead><tr><th>Supplier item</th><th>${M.tab==='new'?'Last price':'Issue'}</th><th style="width:150px"></th></tr></thead><tbody>${data.map(d=>`<tr><td><div class="supn mono">${d[0].split(' · ')[1]}</div><div class="supm">${d[1]} · #${d[0].split(' · ')[0]}</div></td><td style="color:#444">${d[2]}</td><td style="text-align:right">${M.tab==='new'?`<button class="btn s sm" onclick="toast('Create item','Opens the New item panel, pre-filled from the invoice line.')">${I('plus:b','s14')}Create item</button>`:`<button class="btn s sm" onclick="toast('Resolve conflict','Opens the same panel as Suggested.')">Resolve</button>`}</td></tr>`).join('')}</tbody></table>`;
+    body=`<table class="mt"><thead><tr><th>Supplier item</th><th>${M.tab==='new'?'Last price':'Issue'}</th><th style="width:150px"></th></tr></thead><tbody>${data.map(d=>`<tr><td><div class="supn mono">${d[0].split(' · ')[1]}</div><div class="supm">${d[1]} · #${d[0].split(' · ')[0]}</div></td><td style="color:#444">${d[2]}</td><td style="text-align:right">${M.tab==='new'?`<button class="btn s sm" onclick="toast('Create item','Opens the New item panel, pre-filled from the invoice line.')">${I('plus','s14')}Create item</button>`:`<button class="btn s sm" onclick="toast('Resolve conflict','Opens the same panel as Suggested.')">Resolve</button>`}</td></tr>`).join('')}</tbody></table>`;
   }
   const why=sel&&M.tab==='sug'?whyHTML(sel):`<div class="why2"><div class="wh">${I('sparkle:f','s14 sp')}<span>Toast IQ suggestion</span></div><div style="color:#666;padding:16px 0">Pick a row to see why Toast IQ matched it.</div></div>`;
-  return `<div class="ph"><div><h1>Item mappings</h1><div class="subt">How each supplier’s codes map to your catalog. Every mapping is reused on future invoices.</div></div><div class="acts"><button class="btn s" onclick="toast('Import a supplier catalog','CSV or PDF price lists. (Not part of this prototype.)')">${I('download-simple:b','s16')}Import supplier catalog</button></div></div>
+  return `<div class="ph"><div><h1>Item mappings</h1><div class="subt">How each supplier’s codes map to your catalog. Every mapping is reused on future invoices.</div></div><div class="acts"><button class="btn s" onclick="toast('Import a supplier catalog','CSV or PDF price lists. (Not part of this prototype.)')">${I('upload-simple','s16')}Import supplier catalog</button></div></div>
   <div class="mstat"><div><b>${M.accepted?'96%':'94%'}</b><span>of supplier lines mapped automatically this month</span></div><div class="up">${I('trend-up','s14')}up from 81% in September</div></div>
   <div class="mgrid" style="${M.tab==='sug'?'':'grid-template-columns:1fr'}"><div class="card" style="min-height:600px"><div class="tbar"><div class="seg">${[['sug','Suggested',sugN,'needs'],['new','New items',7,''],['conf','Conflicts',2,'err'],['map','Mapped',(1284+(M.accepted?31:0)+Object.keys(M.done).length).toLocaleString(),'']].map(t=>`<button class="sg ${M.tab===t[0]?'on':''}" onclick="S.maps.tab='${t[0]}';save();render()">${t[1]}<b class="${t[3]}">${t[2]}</b></button>`).join('')}</div></div>${body}</div>
   ${M.tab==='sug'?`<div class="card" style="min-height:600px;display:flex;flex-direction:column">${why}</div>`:''}</div>`;
@@ -1021,7 +1040,7 @@ function whyHTML(r){const ev=r.ev||[['ok',`Same supplier code on ${r.c>=98?'12':
   <div class="evb"><div class="evbh"><span>Evidence</span><small>${okE.length} of ${ev.length} checks pass</small></div>${ev.map(e=>`<div class="evr ${e[0]==='ok'?'':'w'}">${I(e[0]==='ok'?'check-circle':'warning-circle','s16')}<span>${e[1]}</span></div>`).join('')}</div>
   ${(()=>{const others=cands.filter((cd,j)=>j!==pick);return `<div class="evh">${!r.to?'Pick a match':others.length?'Not right? Other matches':'Not right?'}</div>`})()}
   ${cands.map((cd,j)=>j===pick?'':`<div class="cand2" onclick="S.maps.pick=S.maps.pick||{};S.maps.pick['${r.id}']=${j};save();render()"><span>${cd[0]}</span><small>${cd[1]}%</small></div>`).join('')}
-  <div class="alts"><button class="altb" onclick="toast('Search your catalog','Pick any of your 412 items.')">${I('magnifying-glass','s14')}Search items</button><button class="altb" onclick="toast('Create new item','Opens the New item panel.')">${I('plus:b','s14')}Create new item</button></div>
+  <div class="alts"><button class="altb" onclick="toast('Search your catalog','Pick any of your 412 items.')">${I('magnifying-glass','s14')}Search items</button><button class="altb" onclick="toast('Create new item','Opens the New item panel.')">${I('plus','s14')}Create new item</button></div>
   <div style="flex:1"></div><div class="wf2"><button class="btn s" onclick="skipMap('${r.id}')">Skip</button><button class="btn p" ${pick<0?'disabled':''} onclick="acceptMap('${r.id}')">${I('check','s14')}Accept match</button></div></div>`}
 function acceptMap(id){const r=S.maps.rows.find(x=>x.id===id);const p=S.maps.pick&&S.maps.pick[id];const name=r.cands&&p!=null?r.cands[p][0]:r.to;if(!name){S.maps.sel=id;save();render();return}
   S.maps.done[id]=1;save();render();toast('Mapping saved',`${r.code.split(' · ')[1]} → ${name}. Used on every future invoice.`,()=>{delete S.maps.done[id];save();render()})}
@@ -1082,7 +1101,7 @@ function reply(q){const t=q.trim().toLowerCase().replace(/[?!.]+$/,'');
   if(key)return QA2[key]==='TODO'?{todo:1}:{t:QA2[key]};
   if(/^(hi+|hey+|hello+|yo|hola|good (morning|afternoon|evening)|sup)\b/.test(t))return {t:'Hi Maya 👋 I can help with this week’s invoices, supplier prices, item costs and tonight’s sync. What would you like to know?',chips:Object.keys(QA)};
   if(/^(thanks|thank you|thx|ty|ok|okay|cool|great)\b/.test(t))return {t:'Anytime. I’m here if anything else comes up.'};
-  if(/\b(approve|post|pay|delete|send to (books|quickbooks))\b/.test(t))return {t:'I can’t approve, pay or post bills. Those decisions stay with you. I can take you to what’s ready, though.',acts:[['Open Ready invoices',"S.tab='ready';save();go('#invoices')"],['Open Needs you',"S.tab='needs';save();go('#invoices')"]]};
+  if(/\b(approve|post|pay|delete|send to (books|quickbooks))\b/.test(t))return {t:'I can’t approve, pay or post bills. Those decisions stay with you. I can take you to what’s ready, though.',acts:[['Open Ready invoices',"S.tab='ready';UI.page=1;save();go('#invoices')"],['Open Needs you',"S.tab='needs';UI.page=1;save();go('#invoices')"]]};
   if(/\b(weather|news|joke|poem|song|movie|sports?|stock market|bitcoin|recipe for|write (me )?an? (email|essay)|who is|capital of)\b/.test(t))return {t:'That’s outside what I can help with here. I only know Harbor & Vine’s invoices, suppliers, item costs and accounting sync. Here’s what I can do:',chips:Object.keys(QA)};
   if(t.split(/\s+/).length<=2){
     if(/price|cost|expens|margin/.test(t))return {t:'Happy to dig in. Which do you mean?',chips:['Why is food cost up this week?','Which suppliers raised prices?']};
@@ -1099,7 +1118,7 @@ function msgHTML(m){if(m.r==='me')return `<div class="bub me">${m.t}</div>`;
 function askBody(){const L=UI.askLog;let h='';
   if(!L.length)h+=`<div class="hello"><div class="orb" style="width:44px;height:44px;margin-bottom:12px"></div><b>Hi Maya, how can I help?</b><span>Ask about invoices, supplier prices, item costs or tonight’s sync.</span></div><div class="qsl">Try asking</div><div class="qs">${Object.keys(QA).map(CHIP).join('')}</div>`;
   return h+L.map(msgHTML).join('')}
-function askHTML(){return `<aside class="dock" aria-label="Toast IQ assistant"><div class="dh2"><span class="orb" style="width:22px;height:22px"></span><b>Toast IQ</b>${UI.askLog.length?`<button class="btn g sm nc" onclick="UI.askLog=[];render()">${I('plus:b','s14')}New chat</button>`:''}<button class="iconbtn" aria-label="Close Toast IQ" title="Close" onclick="openAsk()">${I('x','s16')}</button></div>
+function askHTML(){return `<aside class="dock" aria-label="Toast IQ assistant"><div class="dh2"><span class="orb" style="width:22px;height:22px"></span><b>Toast IQ</b>${UI.askLog.length?`<button class="btn g sm nc" onclick="UI.askLog=[];render()">${I('plus','s14')}New chat</button>`:''}<button class="iconbtn" aria-label="Close Toast IQ" title="Close" onclick="openAsk()">${I('x','s16')}</button></div>
  <div class="ctx">${I('storefront','s14')}Answering for <b>${S.loc}</b> · week of Nov 10</div>
  <div class="ab" aria-live="polite">${askBody()}</div>
  <div class="af2"><input aria-label="Ask Toast IQ" placeholder="Ask about invoices, prices or sync" onkeydown="if(event.key==='Enter'&&this.value.trim()){askQ(this.value);this.value=''}"><button class="snd" aria-label="Send" onclick="const i=this.previousElementSibling;if(i.value.trim()){askQ(i.value);i.value=''}">${I('arrow-up','s16')}</button></div>
