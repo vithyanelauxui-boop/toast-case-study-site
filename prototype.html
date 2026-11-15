@@ -37,9 +37,9 @@ a:hover{text-decoration:underline}
 .nv:hover{background:#F5F5F5}
 .nv .chev{margin-left:auto;color:var(--mute)}
 .sub{position:relative;margin:2px 0 6px}
-.sub:after{content:"";position:absolute;left:30px;top:0;bottom:27px;width:1px;background:#DDD}
-.si{position:relative;display:flex;align-items:center;gap:10px;height:38px;padding:0 10px 0 50px;border-radius:8px;color:#444;font-size:14px;cursor:pointer;margin-bottom:2px}
-.si:before{content:"";position:absolute;left:30px;top:0;width:14px;height:19px;border-left:1px solid #DDD;border-bottom:1px solid #DDD;border-bottom-left-radius:8px}
+.sub:after{content:"";position:absolute;left:22px;top:0;bottom:27px;width:1px;background:#DDD}
+.si{position:relative;display:flex;align-items:center;gap:10px;height:38px;padding:0 10px 0 42px;border-radius:8px;color:#444;font-size:14px;cursor:pointer;margin-bottom:2px}
+.si:before{content:"";position:absolute;left:22px;top:0;width:14px;height:19px;border-left:1px solid #DDD;border-bottom:1px solid #DDD;border-bottom-left-radius:8px}
 .si:last-child{margin-bottom:0}
 .si .ic{width:16px;height:16px;color:#8C8C8C;flex:none}
 .si:hover{background:#F5F5F5}
@@ -228,6 +228,8 @@ a:hover{text-decoration:underline}
 table.mt td .supn,table.mt td .supm,.cf div span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.cf>div{min-width:0}
 table.mt{table-layout:fixed}table.mt td{height:68px;padding:0 12px}table.mt th{padding:0 12px}.mgrid>.card{overflow:hidden}
 table.mt td>div{min-width:0}
+table.mt tr.mgh td{height:34px;background:#FAFAFA;color:var(--mute);font-size:12px;font-weight:600;letter-spacing:.2px}
+table.mt tr.mgh a{margin-left:10px;font-size:12px}
 .cf{display:flex;align-items:center;gap:10px}
 .cf .bars{display:flex;gap:2px;align-items:flex-end;height:14px}
 .cf .bars i{width:4px;border-radius:1px;background:#E2E2E2}.cf .bars i:nth-child(1){height:6px}.cf .bars i:nth-child(2){height:10px}.cf .bars i:nth-child(3){height:14px}
@@ -613,7 +615,6 @@ tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--blue)}
 .tw3{grid-column:2/-1;display:flex;gap:8px;flex-wrap:wrap}.tw3 span{flex:1;min-width:104px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;display:flex;flex-direction:column;gap:1px}.tw3 small{font-size:11.5px;color:var(--mute)}.tw3 b{font-size:15px;font-weight:600}.tw3 em{font-style:normal;font-size:12px;color:var(--mute)}.tw3 .bad{border-color:#F3B9B5;background:var(--err-t)}.tw3 .bad b{color:var(--err)}
 .iqg,.iq2 .eb,.wh{background:linear-gradient(90deg,#FF3D1F,#F08A1E 30%,#9A6BF2 65%,#1E9BFF);-webkit-background-clip:text;background-clip:text;color:transparent}.iq2{border:1px solid transparent!important;background:linear-gradient(90deg,#FFF4EE,#F8F6FF 55%,#F1F8FF) padding-box,linear-gradient(90deg,#FFB494,#F7D08E,#D2B8F7,#9FD3FF) border-box!important}
 .ic [stroke="currentColor"]{vector-effect:non-scaling-stroke;stroke-width:1.6}.ic.s12 [stroke="currentColor"],.ic.s14 [stroke="currentColor"]{stroke-width:1.35}.ic.s16 [stroke="currentColor"]{stroke-width:1.45}.ic.s24 [stroke="currentColor"]{stroke-width:1.75}.ic2.qtyc{grid-template-columns:32px minmax(0,1fr)}.ic2.qtyc .tl{align-self:start}.ic2.qtyc .tw3{grid-column:2/-1;order:3}.ic2.qtyc .ia{grid-column:2/-1;order:4;justify-content:flex-start;flex-wrap:wrap}.tw3{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))}.tw3 span{min-width:0!important}table.mt td .supn,table.mt td .supm,.cf div span{white-space:normal!important;display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical}th{white-space:nowrap}@media (max-width:760px){.ph h1{flex-wrap:wrap}}@media (max-width:1280px) and (min-width:761px){.dock{position:fixed;top:0;right:0;bottom:0;z-index:85;box-shadow:-16px 0 40px rgba(0,0,0,.12)}}
-.sub:before{display:none}
 </style>
 </head>
 <body>
@@ -811,10 +812,12 @@ function pageInvoices(){
   UI.page=Math.min(Math.max(UI.page||1,1),pages);
   const from=(UI.page-1)*PAGE_SIZE;
   const pageRows=rows.slice(from,from+PAGE_SIZE);
-  return `<div class="ph"><div><h1>Invoices</h1><div class="subt">${S.loc} · week of Nov 10 · <a class="srclink" onclick="openSources()" title="Suppliers sending invoices to Toast automatically">${I('plugs-connected','s14')}Invoice sources · 5 connected</a></div></div><div class="acts"><button class="btn p" onclick="openUpload()">${I('upload-simple','s16')}Upload invoices</button></div></div>
+  const uploadIsTop=!c.needs&&!c.ready;
+  const approveIsTop=!c.needs&&c.ready>0;
+  return `<div class="ph"><div><h1>Invoices</h1><div class="subt">${S.loc} · week of Nov 10 · <a class="srclink" onclick="openSources()" title="Suppliers sending invoices to Toast automatically">${I('plugs-connected','s14')}Invoice sources · 5 connected</a></div></div><div class="acts"><button class="btn ${uploadIsTop?'p':'s'}" onclick="openUpload()">${I('upload-simple','s16')}Upload invoices</button></div></div>
   ${iqBanner()}
   <div class="card"><div class="tbar"><div class="seg" role="tablist">${[['all','All',S.invoices.length,''],['needs','Needs you',c.needs,'needs'],['ready','Ready',c.ready,'ready'],['sync','Sync failed',c.sync,'err'],['appr','Approved',c.appr,''],['qb','In QuickBooks',c.qb,'']].map(t=>`<button role="tab" aria-selected="${S.tab===t[0]}" class="sg ${S.tab===t[0]?'on':''}" onclick="S.tab='${t[0]}';UI.page=1;save();render()">${t[3]?`<i class="sd ${t[3]}"></i>`:''}${t[1]}<b class="${t[3]}">${t[2]}</b></button>`).join('')}</div>
-  <div class="sp"></div>${c.ready&&isGM()?`<button class="btn s" onclick="openBulk()">Approve ${c.ready} ready · ${money(rt).replace(/\.\d\d$/,'')}</button>`:''}
+  <div class="sp"></div>${c.ready&&isGM()?`<button class="btn ${approveIsTop?'p':'s'}" onclick="openBulk()">Approve ${c.ready} ready · ${money(rt).replace(/\.\d\d$/,'')}</button>`:''}
   <div class="tsearch">${I('magnifying-glass','s16')}<input id="tq" placeholder="Search supplier or invoice #" value="${esc(S.q)}" oninput="S.q=this.value;UI.page=1;save();render();const e=$('#tq');e.focus();e.setSelectionRange(e.value.length,e.value.length)"></div></div>
   <div class="fbar">${fchip('src','Source',S.fSrc,['Email','EDI','Scan','Upload'])}${fchip('date','Date','This week',['This week','Last week','Last 30 days','Custom range'])}${S.fSrc?`<a onclick="S.fSrc=null;UI.page=1;save();render()">Clear filters</a>`:''}<span class="fcount">Sorted by what needs you first · ${rows.length} invoice${rows.length===1?'':'s'}</span></div>
   <table><thead><tr><th>Supplier</th><th style="width:126px">Total</th><th style="width:316px">What needs you</th><th style="width:200px">Status</th><th style="width:40px"></th></tr></thead><tbody>
@@ -826,7 +829,7 @@ function pageInvoices(){
 }
 function fchip(k,label,val,opts){const open=UI.fopen===k;return `<div class="fc ${val&&k!=='date'?'on':''}"><button class="fcb" aria-haspopup="listbox" aria-expanded="${open}" onclick="event.stopPropagation();UI.fopen=${open?'null':`'${k}'`};render()">${label}${val?`: <b>${val}</b>`:''}${I('caret-down','s14')}</button>${open?`<div class="menu fm" onclick="event.stopPropagation()">${opts.map(o=>`<div class="mi" onclick="UI.fopen=null;${k==='src'?`S.fSrc='${o}'`:`toast('Date range','Only this week is in the prototype data.')`};UI.page=1;save();render()">${o===val?I('check','s14'):'<span style="width:14px"></span>'}${o}</div>`).join('')}</div>`:''}</div>`}
 function pageEmpty(){
-  return `<div class="ph"><div><h1>Invoices</h1><div class="subt">${S.loc}</div></div><div class="acts"><button class="btn s" onclick="openUpload(true)">${I('upload-simple','s16')}Upload invoices</button></div></div>
+  return `<div class="ph"><div><h1>Invoices</h1><div class="subt">${S.loc}</div></div><div class="acts"><button class="btn p" onclick="openUpload(true)">${I('upload-simple','s16')}Upload invoices</button></div></div>
   <div class="empty"><div class="mi">${I('envelope-simple','s24')}</div><h2>Get your first invoice into Toast</h2>
   <p>Forward supplier emails to your Toast address. We read each bill, update item costs and stock, and you only step in when something looks off.</p>
   <div class="copyrow"><input class="inp" readonly value="southend.harborvine@invoices.toasttab.com"><button class="btn p" onclick="try{navigator.clipboard.writeText('southend.harborvine@invoices.toasttab.com').catch(()=>{})}catch(e){};toast('Address copied','Paste it into your supplier’s billing contact.')">${I('copy','s16')}Copy</button></div>
@@ -985,7 +988,7 @@ function addFiles(fl){const ids=['sysco','sg','baldor'];let k=UI.upload.files.fi
 function dz(e,on){e.preventDefault();UI.upload.over=on;const d=document.querySelector('.drop');if(d)d.classList.toggle('over',on)}
 function dropF(e){e.preventDefault();UI.upload.over=false;addFiles(e.dataTransfer.files)}
 const dropAttrs=`ondragover="dz(event,true)" ondragleave="dz(event,false)" ondrop="dropF(event)"`;
-function browse(label){return `<label class="btn ${label==='mini'?'g':'p'}" style="cursor:pointer">${I(label==='mini'?'plus:b':'upload-simple:b','s16')}${label==='mini'?'Add more files':'Browse files'}<input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.heic" style="display:none" onchange="addFiles(this.files)"></label>`}
+function browse(label){return `<label class="btn ${label==='mini'?'g':'p'}" style="cursor:pointer">${I(label==='mini'?'plus':'upload-simple','s16')}${label==='mini'?'Add more files':'Browse files'}<input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.heic" style="display:none" onchange="addFiles(this.files)"></label>`}
 function uploadHTML(){const u=UI.upload;const F=u.files;
   if(!F.length)return `<div class="scrim" onclick="if(event.target===this)closeModal()"><div class="modal" role="dialog" aria-modal="true" tabindex="-1"><div class="mh"><div><h2>Upload invoices</h2><div class="subt">PDFs or photos, up to 50 at once. Toast IQ only asks about what looks off.</div></div><button class="iconbtn" aria-label="Close" onclick="closeModal()">${I('x')}</button></div>
   <div style="padding:6px 24px 22px"><div class="drop big" ${dropAttrs}>
@@ -1037,6 +1040,7 @@ const confHTMLm=(r)=>{const c=CONF(r.c);return `<div class="cf ${c.k}" title="${
 function pageMappings(){const M=S.maps;let rows=M.rows.filter(r=>!M.done[r.id]);
   const sel=M.rows.find(r=>r.id===M.sel&&!M.done[r.id])||rows[0];if(sel)M.sel=sel.id;
   const sugN=46-Object.keys(M.done).length-(M.accepted?28:0);
+  const sessN=Object.keys(M.done).length+(M.accepted?28:0);
   let body='';
   if(M.tab==='sug'){
     const hiN=rows.filter(r=>r.c>=90).length;
@@ -1052,13 +1056,17 @@ function pageMappings(){const M=S.maps;let rows=M.rows.filter(r=>!M.done[r.id]);
     const data={new:[['SG-90412 · WHSP ANGEL ROSE 750ML','Southern Glazer’s','$240.00 / CS · Nov 13'],['BLD-MIC-PEA · MICROGREENS PEA 1#','Baldor','$14.25 / EA · Nov 12'],['CC-SOUR-12 · SOUR ALE 12OZ 6PK','Craft Collective','$54.00 / CS · Nov 12']],
       conf:[['1022180 · EGGS LG 15DZ','Sysco','Two items at Back Bay: “Eggs, large” and “Eggs, brown”'],['4471-220 · BUTTER UNSLT 36/1#','US Foods','Pack size changed: 36/1# → 30/1#']],
       map:[['1004421 · MILK WHL GAL 4/1','Sysco','Whole milk, gallon','1 CS = 4 gal','Nov 13'],['49000-02890 · COKE 20OZ 24PK','Coca-Cola Bev. NE','Coca-Cola 20 oz','1 CS = 24 ea','Nov 12'],['1883421 · AVOCADO HASS 48CT','Sysco','Avocado, Hass','1 CS = 48 ea','Nov 13'],['1660231 · BUTTER UNSLT 36/1#','Sysco','Butter, unsalted','1 CS = 36 lb','Nov 13']]}[M.tab];
-    if(M.tab==='map'){body=`<table class="mt"><thead><tr><th>Supplier item</th><th>Your item</th><th>Converts as</th><th>Last on an invoice</th><th style="width:56px"></th></tr></thead><tbody>${data.map(d=>`<tr class="click" onclick="toast('Edit mapping','Opens the same side panel as Suggested.')"><td><div class="supn mono">${d[0].split(' · ')[1]}</div><div class="supm">${d[1]} · #${d[0].split(' · ')[0]}</div></td><td><div class="supn" style="font-weight:500">${d[2]}</div></td><td style="color:#555">${d[3]}</td><td style="color:#555">${d[4]}</td><td><button class="ibtn" aria-label="Edit mapping" data-tip="Edit mapping" onclick="event.stopPropagation();toast('Edit mapping','Opens the same side panel as Suggested.')">${I('pencil-simple','s16')}</button></td></tr>`).join('')}</tbody></table>`}else
+    if(M.tab==='map'){const mine=S.maps.rows.filter(r=>S.maps.done[r.id]).map(r=>{const p=S.maps.pick&&S.maps.pick[r.id];return [r,(r.cands&&p!=null?r.cands[p][0]:r.to||'').replace(' ?','')]});
+      const mineCodes=new Set(mine.map(([r])=>r.code.split(' · ')[0]));
+      const earlier=data.filter(d=>!mineCodes.has(d[0].split(' · ')[0]));
+      const mineHTML=mine.length?`<tr class="mgh"><td colspan="5">Saved this session · ${sessN}${M.accepted?`<a onclick="unmapBulk()">Undo bulk accept</a>`:''}</td></tr>${mine.map(([r,n])=>`<tr><td><div class="supn mono">${r.code.split(' · ')[1]}</div><div class="supm">${r.sup} · #${r.code.split(' · ')[0]}</div></td><td><div class="supn" style="font-weight:500">${n}</div></td><td style="color:#555">${r.conv}</td><td style="color:#555">Saved by ${role().name.split(' ')[0]} · just now</td><td><button class="ibtn" aria-label="Undo mapping" data-tip="Undo mapping" onclick="unmap('${r.id}')">${I('arrow-counter-clockwise','s16')}</button></td></tr>`).join('')}${M.accepted?`<tr class="more"><td colspan="5">+ 28 more exact matches from the bulk accept · same code or UPC as past orders</td></tr>`:''}<tr class="mgh"><td colspan="5">Earlier</td></tr>`:'';
+      body=`<table class="mt"><thead><tr><th>Supplier item</th><th>Your item</th><th>Converts as</th><th>Last on an invoice</th><th style="width:56px"></th></tr></thead><tbody>${mineHTML}${earlier.map(d=>`<tr class="click" onclick="toast('Edit mapping','Opens the same side panel as Suggested.')"><td><div class="supn mono">${d[0].split(' · ')[1]}</div><div class="supm">${d[1]} · #${d[0].split(' · ')[0]}</div></td><td><div class="supn" style="font-weight:500">${d[2]}</div></td><td style="color:#555">${d[3]}</td><td style="color:#555">${d[4]}</td><td><button class="ibtn" aria-label="Edit mapping" data-tip="Edit mapping" onclick="event.stopPropagation();toast('Edit mapping','Opens the same side panel as Suggested.')">${I('pencil-simple','s16')}</button></td></tr>`).join('')}</tbody></table>`}else
     body=`<table class="mt"><thead><tr><th>Supplier item</th><th>${M.tab==='new'?'Last price':'Issue'}</th><th style="width:150px"></th></tr></thead><tbody>${data.map(d=>`<tr><td><div class="supn mono">${d[0].split(' · ')[1]}</div><div class="supm">${d[1]} · #${d[0].split(' · ')[0]}</div></td><td style="color:#444">${d[2]}</td><td style="text-align:right">${M.tab==='new'?`<button class="btn s sm" onclick="toast('Create item','Opens the New item panel, pre-filled from the invoice line.')">${I('plus','s14')}Create item</button>`:`<button class="btn s sm" onclick="toast('Resolve conflict','Opens the same panel as Suggested.')">Resolve</button>`}</td></tr>`).join('')}</tbody></table>`;
   }
   const why=sel&&M.tab==='sug'?whyHTML(sel):`<div class="why2"><div class="wh">${I('sparkle:f','s14 sp')}<span>Toast IQ suggestion</span></div><div style="color:#666;padding:16px 0">Pick a row to see why Toast IQ matched it.</div></div>`;
   return `<div class="ph"><div><h1>Item mappings</h1><div class="subt">How each supplier’s codes map to your catalog. Every mapping is reused on future invoices.</div></div><div class="acts"><button class="btn s" onclick="toast('Import a supplier catalog','CSV or PDF price lists. (Not part of this prototype.)')">${I('upload-simple','s16')}Import supplier catalog</button></div></div>
   <div class="mstat"><div><b>${M.accepted?'96%':'94%'}</b><span>of supplier lines mapped automatically this month</span></div><div class="up">${I('trend-up','s14')}up from 81% in September</div></div>
-  <div class="mgrid" style="${M.tab==='sug'?'':'grid-template-columns:1fr'}"><div class="card" style="min-height:600px"><div class="tbar"><div class="seg">${[['sug','Suggested',sugN,'needs'],['new','New items',7,''],['conf','Conflicts',2,'err'],['map','Mapped',(1284+(M.accepted?31:0)+Object.keys(M.done).length).toLocaleString(),'']].map(t=>`<button class="sg ${M.tab===t[0]?'on':''}" onclick="S.maps.tab='${t[0]}';save();render()">${t[1]}<b class="${t[3]}">${t[2]}</b></button>`).join('')}</div></div>${body}</div>
+  <div class="mgrid" style="${M.tab==='sug'?'':'grid-template-columns:1fr'}"><div class="card" style="min-height:600px"><div class="tbar"><div class="seg">${[['sug','Suggested',sugN,'needs'],['new','New items',7,''],['conf','Conflicts',2,'err'],['map','Mapped',(1284+sessN).toLocaleString(),'']].map(t=>`<button class="sg ${M.tab===t[0]?'on':''}" onclick="S.maps.tab='${t[0]}';save();render()">${t[1]}<b class="${t[3]}">${t[2]}</b></button>`).join('')}</div></div>${body}</div>
   ${M.tab==='sug'?`<div class="card" style="min-height:600px;display:flex;flex-direction:column">${why}</div>`:''}</div>`;
 }
 function whyHTML(r){const ev=r.ev||[['ok',`Same supplier code on ${r.c>=98?'12':'4'} past orders`],['ok',`Pack ${r.conv}, your count unit`],['ok','Price within 5% of last order']];
@@ -1075,9 +1083,11 @@ function whyHTML(r){const ev=r.ev||[['ok',`Same supplier code on ${r.c>=98?'12':
   <div class="alts"><button class="altb" onclick="toast('Search your catalog','Pick any of your 412 items.')">${I('magnifying-glass','s14')}Search items</button><button class="altb" onclick="toast('Create new item','Opens the New item panel.')">${I('plus','s14')}Create new item</button></div>
   <div style="flex:1"></div><div class="wf2"><button class="btn s" onclick="skipMap('${r.id}')">Skip</button><button class="btn p" ${pick<0?'disabled':''} onclick="acceptMap('${r.id}')">${I('check','s14')}Accept match</button></div></div>`}
 function acceptMap(id){const r=S.maps.rows.find(x=>x.id===id);const p=S.maps.pick&&S.maps.pick[id];const name=r.cands&&p!=null?r.cands[p][0]:r.to;if(!name){S.maps.sel=id;save();render();return}
-  S.maps.done[id]=1;save();render();toast('Mapping saved',`${r.code.split(' · ')[1]} → ${name}. Used on every future invoice.`,()=>{delete S.maps.done[id];save();render()})}
+  S.maps.done[id]=1;save();render();toast('Mapping saved',`${r.code.split(' · ')[1]} → ${name}. Used on every future invoice · change it anytime under Mapped.`,()=>{delete S.maps.done[id];save();render()})}
+function unmap(id){const r=S.maps.rows.find(x=>x.id===id);delete S.maps.done[id];if(!S.maps.rows.some(x=>x.c>=90&&S.maps.done[x.id]))S.maps.accepted=false;save();render();toast('Mapping undone',`${r.code.split(' · ')[1]} is back in Suggested. Invoices already approved keep their lines.`)}
+function unmapBulk(){S.maps.rows.filter(r=>r.c>=90).forEach(r=>delete S.maps.done[r.id]);S.maps.accepted=false;save();render();toast('Bulk accept undone','Those matches are back in Suggested. Invoices already approved keep their lines.')}
 function skipMap(id){const rows=S.maps.rows.filter(r=>!S.maps.done[r.id]);const i=rows.findIndex(r=>r.id===id);const n=rows[(i+1)%rows.length];S.maps.sel=n.id;save();render()}
-function acceptHigh(){S.maps.rows.filter(r=>r.c>=90).forEach(r=>S.maps.done[r.id]=1);S.maps.accepted=true;save();render();toast('31 mappings accepted','15 suggestions left, each needs a quick look.',()=>{S.maps.rows.filter(r=>r.c>=90).forEach(r=>delete S.maps.done[r.id]);S.maps.accepted=false;save();render()})}
+function acceptHigh(){S.maps.rows.filter(r=>r.c>=90).forEach(r=>S.maps.done[r.id]=1);S.maps.accepted=true;save();render();toast('31 mappings accepted','15 suggestions left. Undo anytime under Mapped.',()=>{S.maps.rows.filter(r=>r.c>=90).forEach(r=>delete S.maps.done[r.id]);S.maps.accepted=false;save();render()})}
 
 /* ---------------- accounting ---------------- */
 const GL=[['carrot','Food · Produce','5010 · COGS – Produce',6204.10],['cow','Food · Meat & poultry','5020 · COGS – Meat',9880.42],['wine','Beverage · Wine & spirits','5120 · COGS – Liquor',14312.00],['basket','Retail · Packaged grocery','5210 · COGS – Retail grocery',4118.66]];
@@ -1085,7 +1095,7 @@ function glTable(){const A=S.acct;const tot=GL.reduce((a,g)=>a+g[3],0)+1402.75;c
  return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;padding:16px"><div><b style="font-size:15px;font-weight:600">Where inventory costs post in QuickBooks</b><div style="font-size:12.5px;color:var(--mute);margin-top:2px">Each category posts to one account, so food cost on your P&L matches Toast</div></div><a onclick="go('#gl')">Manage GL mappings ${I('arrow-right','s14')}</a></div>
  <table><thead><tr><th>Toast category</th><th>GL account (QuickBooks)</th><th style="width:220px">Last 30 days</th><th style="width:170px">Status</th></tr></thead><tbody>
  ${GL.map(g=>row(g[0],g[1],g[2],g[3],'<span class="pill ok">Mapped</span>')).join('')}
- ${row('package','Paper & disposables',A.rdFixed?'6125 · Packaging Supplies':'6120 · archived in QuickBooks',1402.75,A.rdFixed?'<span class="pill ok">Remapped today</span>':'<span class="pill err">Needs new account</span>',!A.rdFixed)}</tbody></table></div>`}
+ ${row('file-text','Paper & disposables',A.rdFixed?'6125 · Packaging Supplies':'6120 · archived in QuickBooks',1402.75,A.rdFixed?'<span class="pill ok">Remapped today</span>':'<span class="pill err">Needs new account</span>',!A.rdFixed)}</tbody></table></div>`}
 function pageAccounting(){if(S.role==='rec')return `<div class="placeholder"><div style="width:56px;height:56px;border-radius:50%;background:#F1F1F1;margin:0 auto 16px;display:flex;align-items:center;justify-content:center">${I('book-open','s24')}</div><h2>Accounting is for managers and bookkeepers</h2><p>Jordan, your role covers receiving and uploading invoices. Ask Maya if you need access.</p><button class="btn p" onclick="go('#invoices')">Back to Invoices</button></div>`;
   const A=S.acct;const issues=(!A.rdFixed)+(!A.cmFixed);
   const head=`<div class="ph"><div><h1 style="display:flex;align-items:center;gap:12px">Accounting sync <span class="pill ok">QuickBooks Online · connected</span></h1><div class="subt">Approved invoices sync nightly at 2 AM · last sync ${A.lastSync}</div></div><div class="acts"><button class="btn s" onclick="toast('Sync settings','Schedule, accounts and vendor matching. (Not part of this prototype.)')">Sync settings</button><button class="btn p" onclick="syncNow()">${A.syncing?I('spinner-gap','s16 spin'):I('arrows-clockwise','s16')}${A.syncing?'Syncing…':'Sync now'}</button></div></div>`;
@@ -1093,7 +1103,7 @@ function pageAccounting(){if(S.role==='rec')return `<div class="placeholder"><di
   const stat=(ic,tone,k,v,sub)=>`<div class="st2 ${tone}"><span class="sti">${I(ic,'s20')}</span><div><div class="k">${k}</div><div class="v">${v}</div><div class="s">${sub}</div></div></div>`;
   const stats=`<div class="card stats4">
    ${stat('cloud-check','ok','In QuickBooks this week',money(41920.55+(A.rdFixed?289.75:0)),`${38+(A.rdFixed?1:0)} bills`)}
-   ${stat('clock-countdown','info','Syncing tonight · 2 AM','$5,873.40','5 bills')}
+   ${stat('clock','info','Syncing tonight · 2 AM','$5,873.40','5 bills')}
    ${issues?stat('warning-circle','bad','Kept out of your books',money(amt),`${issues} issue${issues>1?'s':''} below`):stat('check-circle','ok','Kept out of your books','$0.00','nothing waiting')}
    ${stat('timer','sv','Time saved this month','11.5 hrs','<span style="color:var(--ok)">212 bills not typed</span>')}</div>`;
   if(!issues)return head+stats+`<div class="healthy"><div class="ci">${I('check-circle','s24')}</div><div style="flex:1"><b>Everything is in your books</b><span>COGS in QuickBooks matches Toast to the cent · next sync tonight at 2 AM</span></div><a onclick="toast('Sync history','43 bills this week. (Not part of this prototype.)')">View sync history</a></div>`+glTable();
@@ -1154,7 +1164,7 @@ function askHTML(){return `<aside class="dock" aria-label="Toast IQ assistant"><
  <div class="ctx">${I('storefront','s14')}Answering for <b>${S.loc}</b> · week of Nov 10</div>
  <div class="ab" aria-live="polite">${askBody()}</div>
  <div class="af2"><input aria-label="Ask Toast IQ" placeholder="Ask about invoices, prices or sync" onkeydown="if(event.key==='Enter'&&this.value.trim()){askQ(this.value);this.value=''}"><button class="snd" aria-label="Send" onclick="const i=this.previousElementSibling;if(i.value.trim()){askQ(i.value);i.value=''}">${I('arrow-up','s16')}</button></div>
- <div class="disc">Toast IQ can make mistakes. It suggests; you approve. Check numbers against the invoice.</div></aside>`}
+ <div class="disc">Toast IQ can make mistakes. Please double-check its responses.</div></aside>`}
 function paintAsk(){const b=$('.dock .ab');if(!b)return;b.innerHTML=askBody();b.scrollTop=b.scrollHeight;a11yPass()}
 function askQ(q){if(UI.askBusy)return;UI.askBusy=true;const L=UI.askLog;const first=!L.length;L.push({r:'me',t:esc(q)});L.push({r:'typing'});if(first||!$('.dock'))render();paintAsk();
   setTimeout(()=>{L.pop();const r=reply(q);if(r.todo){L.push({r:'ai',todo:1});UI.askBusy=false;paintAsk();return}
