@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Invoices to books · Toast Inventory concept · Vithyanela</title>
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta name="description" content="A concept case study: AI-assisted invoice capture, review, item mapping and accounting sync for Toast Inventory. Designed and prototyped by Vithyanela.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -30,7 +33,7 @@ h3,h4{margin:0;font-weight:600}
 header.top{position:sticky;top:0;z-index:20;background:rgba(252,251,249,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 header.top .w{display:flex;align-items:center;gap:20px;height:62px}
 .brand{display:flex;align-items:center;gap:10px;font:600 16px Fraunces,serif;color:var(--ink);text-decoration:none;white-space:nowrap}
-.brand i{width:14px;height:14px;border-radius:4px;background:var(--accent)}
+.brand svg{width:22px;height:22px;flex:none}.brand svg path{stroke:var(--accent)}
 .brand span{font:400 13px Inter;color:var(--mute)}
 nav.sec{display:flex;gap:2px;margin:0 auto;overflow:auto;scrollbar-width:none}
 nav.sec a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:6px 9px;border-radius:999px;white-space:nowrap}
@@ -587,7 +590,7 @@ footer a{color:inherit}
 </head>
 <body id="top">
 <header class="top"><div class="w">
- <a class="brand" href="#top"><i></i>Toast Inventory <span>· Vithyanela</span></a>
+ <a class="brand" href="#top"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M8 27Q6 27 6 25V15.5C3.6 15 2.8 11.5 4.5 8.8C5.8 6.6 8.2 5.8 10.4 6.2C12.6 6.6 14.2 7.8 16 8C17.8 7.8 19.4 6.6 21.6 6.2C23.8 5.8 26.2 6.6 27.5 8.8C29.2 11.5 28.4 15 26 15.5V25Q26 27 24 27Z" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>Toast Inventory <span>· Vithyanela</span></a>
  <nav class="sec" aria-label="Sections">
   <a href="#role">Role</a><a href="#problem">Problem</a><a href="#users">Users</a><a href="#journey">Journey</a><a href="#solution">Solution</a><a href="#behind">Design</a><a href="#measure">Metrics</a>
  </nav>
