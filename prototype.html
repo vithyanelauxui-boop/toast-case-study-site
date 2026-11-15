@@ -62,6 +62,22 @@ a:hover{text-decoration:underline}
 .navstat .nst{display:flex;flex-direction:column;line-height:1.3;min-width:0}
 .navstat .nst b{font-size:12.5px;font-weight:600;color:var(--ink)}
 .navstat .nst span{font-size:11.5px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nswrap{position:relative}
+.qbpop{position:absolute;left:12px;right:12px;top:calc(100% - 2px);z-index:60;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.14);padding:12px;display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--ink)}
+.rgrp.qbg .qbpop{left:48px;right:auto;top:-6px;width:260px}
+.rgrp.qbg.open .fly.tip{display:none!important}
+.qps{display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--line)}.qps>div{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}.qps b{font-size:13px;font-weight:600}.qps span:not(.qpd){font-size:12px;color:var(--mute)}
+.qpd{width:6px;height:6px;border-radius:50%;background:#2E9E5B;flex:none}
+.qpi{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:none;padding:7px 6px;margin:0 -6px;border-radius:8px;cursor:pointer;color:var(--ink)}.qpi:hover{background:#F5F5F5}
+.qpi>div{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}.qpi b{font-size:13px;font-weight:500}.qpi span{font-size:12px;color:var(--mute)}
+.qpi .ic:first-child{color:var(--warn-tx);flex:none}.qpi .ic:last-child{color:#999;flex:none}
+.qpok{display:flex;align-items:center;gap:8px;padding:4px 0;color:#444;font-size:12.5px}.qpok .ic{color:var(--ok);flex:none}
+.qpo{display:flex;align-items:center;justify-content:space-between;width:100%;border:0;border-top:1px solid var(--line);background:none;padding:10px 6px 2px;margin:2px -6px -2px;color:var(--blue);font-weight:600;font-size:13px;cursor:pointer}.qpo:hover{text-decoration:underline}
+.navstat .nschev{margin-left:auto;color:var(--mute);flex:none}
+.navstat:hover .nschev{color:var(--ink)}
+.navstat.warn .nsdot,.rbi .gdot.warn{background:#D98A00}
+.navstat.warn .nst span{color:var(--warn-tx)}
+.navstat.sync .nsdot,.rbi .gdot.sync{background:var(--blue)}
 .rdiv{width:28px;height:1px;background:var(--line);margin:6px 0}
 .main{flex:1;display:flex;flex-direction:column;min-width:0}
 .top{height:56px;flex:none;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 20px;gap:16px}
@@ -727,12 +743,23 @@ const NAV=[
   {k:'accounting',n:'Accounting',i:'book-open',sub:[['accounting','Accounting sync','arrows-clockwise'],['gl','GL mappings','sliders-horizontal']]},
   {k:'employees',n:'Employees',i:'users',g:1},{k:'settings',n:'Settings',i:'gear',g:1}];
 function badge(k){const c=counts();if(k==='invoices')return c.needs+c.ready;if(k==='mappings')return S.maps.accepted?15:46;if(k==='accounting'){const n=(!S.acct.rdFixed)+(!S.acct.cmFixed);return n||null}return null}
+function qbPopHTML(){const A=S.acct;
+  const rows=[];
+  if(!A.rdFixed)rows.push(['archive','Restaurant Depot','Didn’t sync · $289.75',"UI.qb=false;UI.modal='remap';UI.remap=0;render()"]);
+  if(!A.cmFixed)rows.push(['receipt','Sysco credit','On hold · −$96.00',"UI.qb=false;go('#accounting');render()"]);
+  return `<div class="qbpop" role="dialog" aria-label="QuickBooks sync status" onclick="event.stopPropagation()">
+   <div class="qps"><span class="qpd"></span><div><b>Connected</b><span>Synced ${A.lastSync}</span></div><button class="iconbtn" aria-label="Sync now" title="Sync now" ${A.syncing?'disabled':''} onclick="UI.qb=false;syncNow()">${I('arrows-clockwise','s16')}</button></div>
+   ${rows.length?rows.map(r=>`<button class="qpi" onclick="${r[3]}">${I(r[0],'s16')}<div><b>${r[1]}</b><span>${r[2]}</span></div>${I('caret-right','s14')}</button>`).join(''):`<div class="qpok">${I('check-circle','s16')}Everything approved is in your books.</div>`}
+   <button class="qpo" onclick="UI.qb=false;go('#accounting');render()">Open Accounting sync${I('arrow-right','s14')}</button></div>`}
 function sideHTML(cur){
   let r=route()[0];if(r==='review')r='invoices';
-  const conn=S.role==='rec'?{ic:'plugs-connected',k:'Invoice sources',v:'5 connected',go:'#invoices'}:{ic:'cloud-check',k:'QuickBooks',v:'Connected · synced '+S.acct.lastSync,go:'#accounting'};
+  const A=S.acct,iss=(!A.rdFixed)+(!A.cmFixed);
+  const conn=S.role==='rec'?{ic:'plugs-connected',k:'Invoice sources',v:'5 connected',tone:'ok',act:'openSources()'}
+    :{ic:'cloud-check',k:'QuickBooks',tone:A.syncing?'sync':iss?'warn':'ok',pop:true,act:'event.stopPropagation();UI.qb=!UI.qb;render()',
+      v:A.syncing?'Syncing now…':iss===2?'2 items need attention':!A.rdFixed?'1 bill didn’t sync':iss?'1 credit on hold':'Synced '+A.lastSync};
   if(S.nav.rail){
     let h=`<div class="side rail ${UI.anim||''}"><button class="brand rbtn" aria-label="Expand menu" onclick="toggleRail()"><span class="lg"><img src="${LOGO}" alt="Toast" style="width:24px;height:24px;object-fit:cover;object-position:left center;filter:brightness(0) invert(1)"></span><span class="ex">${I('sidebar-simple','s20')}</span><span class="ktip">Expand menu <kbd>⌘</kbd><kbd>B</kbd></span></button><div class="rb">
-    <div class="rgrp"><div class="rbi" aria-label="${conn.k}, ${conn.v}" onclick="go('${conn.go}')">${I(conn.ic)}<span class="gdot"></span></div><div class="fly tip">${conn.k} · ${conn.v}</div></div>`;
+    <div class="rgrp qbg ${conn.pop&&UI.qb?'open':''}"><div class="rbi" aria-label="${conn.k}, ${conn.v}" onclick="${conn.act}">${I(conn.ic)}<span class="gdot ${conn.tone}"></span></div><div class="fly tip">${conn.k} · ${conn.v}</div>${conn.pop&&UI.qb?qbPopHTML():''}</div>`;
     for(const n of NAV){if(n.k==='accounting'&&S.role==='rec')continue;
       const act=n.sub?n.sub.some(x=>x[0]===r):r===n.k;const dot=n.sub&&n.sub.some(x=>badge(x[0]));
       if(n.sub){h+=`<div class="rgrp"><div class="rbi ${act?'on':''}" tabindex="0" aria-label="${n.n}" aria-haspopup="menu">${I(n.i)}${dot?'<span class="dot"></span>':''}</div>
@@ -740,7 +767,7 @@ function sideHTML(cur){
       else h+=`<div class="rgrp"><div class="rbi ${act?'on':''}" aria-label="${n.n}" onclick="go('#${n.k}')">${I(n.i)}</div><div class="fly tip">${n.n}</div></div>`}
     h+=`</div></div>`;return h}
   let h=`<div class="side ${UI.anim||''}"><div class="brand"><img src="${LOGO}" alt="toast"><button class="iconbtn ktw" aria-label="Collapse menu" onclick="toggleRail()">${I('sidebar-simple')}<span class="ktip">Collapse menu <kbd>⌘</kbd><kbd>B</kbd></span></button></div>
-  <div class="navstat" onclick="go('${conn.go}')" title="${conn.k} · ${conn.v}"><span class="nsdot"></span>${I(conn.ic,'s16')}<div class="nst"><b>${conn.k}</b><span>${conn.v}</span></div></div>
+  <div class="nswrap"><div class="navstat ${conn.tone}" onclick="${conn.act}" title="${conn.k} · ${conn.v}" aria-haspopup="${conn.pop?'dialog':'false'}" aria-expanded="${!!(conn.pop&&UI.qb)}"><span class="nsdot"></span>${I(conn.ic,'s16')}<div class="nst"><b>${conn.k}</b><span>${conn.v}</span></div>${I(conn.pop&&UI.qb?'caret-up':'caret-down','s14 nschev')}</div>${conn.pop&&UI.qb?qbPopHTML():''}</div>
   <div class="nav">`;
   for(const n of NAV){
     if(n.k==='accounting'&&S.role==='rec')continue;
@@ -1200,7 +1227,7 @@ function render(){
   ${UI.modal==='upload'?uploadHTML():UI.modal==='bulk'?bulkHTML():UI.modal==='remap'?remapHTML():UI.modal==='sources'?sourcesHTML():''}${drawerHTML()}${protoHTML()}`;
   $('.content').scrollTop=keep;a11yPass();
 }
-document.addEventListener('click',e=>{let r=false;if(UI.proto&&!e.target.closest('.proto')){UI.proto=false;r=true}if(UI.fopen&&!e.target.closest('.fc')){UI.fopen=null;r=true}if(UI.me){UI.me=false;r=true}if(UI.locOpen&&!e.target.closest('.loc')){UI.locOpen=false;r=true}if(UI.pop&&!e.target.closest('.dmenu')){UI.pop=null;r=true}if(r)render()});
+document.addEventListener('click',e=>{let r=false;if(UI.proto&&!e.target.closest('.proto')){UI.proto=false;r=true}if(UI.fopen&&!e.target.closest('.fc')){UI.fopen=null;r=true}if(UI.me){UI.me=false;r=true}if(UI.qb){UI.qb=false;r=true}if(UI.locOpen&&!e.target.closest('.loc')){UI.locOpen=false;r=true}if(UI.pop&&!e.target.closest('.dmenu')){UI.pop=null;r=true}if(r)render()});
 document.addEventListener('keydown',e=>{const t=e.target;if((e.key==='Enter'||e.key===' ')&&t&&t.matches&&t.matches('[role=button],[role=link]')&&!/^(BUTTON|INPUT|TEXTAREA|SELECT)$/.test(t.tagName)&&!(t.tagName==='A'&&t.hasAttribute('href'))){e.preventDefault();t.click();return}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='b'){e.preventDefault();toggleRail();return}if(e.key==='Escape'){UI.modal=null;UI.drawer=null;UI.ask=false;UI.pop=null;render()}});
 render();
 </script>
